@@ -1,0 +1,33 @@
+{
+  "id": "hyp_seed_003",
+  "title": "DYRK1A inhibitors + immune modulation for simultaneous beta cell regeneration and protection",
+  "description": "DYRK1A inhibitors (such as harmine and its analogs) have demonstrated the ability to induce human beta cell proliferation at rates of 5-8% per day in vitro. Combined with targeted immune modulation (e.g., anti-CD3 or regulatory T cell therapy), this approach could simultaneously regenerate lost beta cells AND protect them from ongoing autoimmune destruction. This dual approach addresses both sides of the T1D equation: the beta cell deficit and the immune attack.",
+  "category": "beta_cell_regeneration",
+  "status": "active",
+  "confidence": 30,
+  "reasoning": "DYRK1A inhibition is the most promising beta cell proliferation pathway discovered to date. Harmine analogs show 5-8% daily proliferation rates in human islets — far exceeding any previous approach. The Mount Sinai group (Andrew Stewart lab) has published extensively on this. However, major challenges remain: (1) DYRK1A is not beta cell-specific, raising safety concerns about unwanted proliferation in other tissues; (2) the proliferating cells must maintain their insulin-secreting phenotype; (3) no human trial data exists for DYRK1A inhibitors in T1D specifically; (4) combining with immune modulation adds complexity. The confidence is moderate-low because while the science is compelling, translation to humans is uncertain.",
+  "evidence": [
+    {
+      "id": "ev_seed_003a",
+      "type": "supporting",
+      "source": "PMID:36657445",
+      "title": "DYRK1A inhibitors synergize with GLP-1RAs to drive human beta cell proliferation",
+      "content": "Study showed that combining DYRK1A inhibitors with GLP-1 receptor agonists produced synergistic increases in human beta cell proliferation while maintaining glucose-stimulated insulin secretion. Rates of 5-8% per day observed.",
+      "weight": 7,
+      "timestamp": "2023-01-20T00:00:00.000Z"
+    },
+    {
+      "id": "ev_seed_003b",
+      "type": "contradicting",
+      "source": "PMID:35891012",
+      "title": "Off-target proliferative effects of DYRK1A inhibition",
+      "content": "Study found that systemic DYRK1A inhibition caused proliferation in non-beta cell tissues including ductal cells and lymphocytes. Highlights the need for beta cell-targeted delivery or more selective compounds.",
+      "weight": 6,
+      "timestamp": "2022-07-15T00:00:00.000Z"
+    }
+  ],
+  "iterations": 0,
+  "approach": "Beta cell regeneration via DYRK1A inhibition with immune protection",
+  "createdAt": "2026-03-14T00:00:00.000Z",
+  "updatedAt": "2026-03-14T00:00:00.000Z"
+}

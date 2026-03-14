@@ -1,0 +1,51 @@
+[
+  {
+    "id": "stem_cell",
+    "name": "Stem Cell Therapy",
+    "description": "Replacing destroyed beta cells with new insulin-producing cells derived from stem cells",
+    "color": "#8B5CF6",
+    "icon": "Microscope"
+  },
+  {
+    "id": "immunotherapy",
+    "name": "Immunotherapy",
+    "description": "Stopping or modulating the immune system attack on beta cells",
+    "color": "#3B82F6",
+    "icon": "Shield"
+  },
+  {
+    "id": "gene_editing",
+    "name": "Gene Editing",
+    "description": "Using CRISPR and other gene editing tools to create immune-invisible cells or correct genetic factors",
+    "color": "#EC4899",
+    "icon": "Dna"
+  },
+  {
+    "id": "beta_cell_regeneration",
+    "name": "Beta Cell Regeneration",
+    "description": "Stimulating the body to regrow its own insulin-producing beta cells",
+    "color": "#10B981",
+    "icon": "Sprout"
+  },
+  {
+    "id": "encapsulation",
+    "name": "Cell Encapsulation",
+    "description": "Protecting transplanted cells inside a barrier that blocks immune attack while allowing insulin to pass through",
+    "color": "#F59E0B",
+    "icon": "Box"
+  },
+  {
+    "id": "combination",
+    "name": "Combination Approaches",
+    "description": "Combining multiple therapies — such as immune modulation with cell replacement — for a complete cure strategy",
+    "color": "#F97316",
+    "icon": "Layers"
+  },
+  {
+    "id": "artificial_pancreas",
+    "name": "Artificial Pancreas",
+    "description": "Automated closed-loop systems that continuously monitor glucose and deliver insulin — not a cure, but the best current technology",
+    "color": "#06B6D4",
+    "icon": "Cpu"
+  }
+]

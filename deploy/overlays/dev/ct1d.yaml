@@ -1,0 +1,88 @@
+# CT1D — Dev Overlay
+# Single replica, minimal resources, debug logging, no persistent volume
+
+groups:
+  - name: web
+    count: 1
+    tasks:
+      - name: nextjs
+        image: "ghcr.io/trytio/ct1d:latest"
+        ports:
+          - label: http
+            container: 3000
+            host: 0
+        resources:
+          cpu: 250
+          memory: 256
+        health_check:
+          type: http
+          path: /
+          port_label: http
+          interval_secs: 15
+          timeout_secs: 10
+          unhealthy_threshold: 3
+          healthy_threshold: 2
+          grace_period_secs: 30
+        env:
+          NODE_ENV: "development"
+          DEBUG: "true"
+          LOG_LEVEL: "debug"
+        secrets:
+          - openai_api_key
+          - autonomous_secret
+        labels:
+          tier: frontend
+          tag.ct1d: "true"
+          environment: "dev"
+          version: "1.0.0-dev"
+
+  - name: agent
+    count: 1
+    strategy: binpack
+    tasks:
+      - name: researcher
+        image: "ghcr.io/trytio/ct1d:latest"
+        ports:
+          - label: http
+            container: 3000
+            host: 0
+        resources:
+          cpu: 200
+          memory: 256
+        health_check:
+          type: http
+          path: /api/autonomous/status
+          port_label: http
+          interval_secs: 30
+          timeout_secs: 10
+          unhealthy_threshold: 3
+          healthy_threshold: 2
+          grace_period_secs: 60
+        env:
+          NODE_ENV: "development"
+          DEBUG: "true"
+        secrets:
+          - openai_api_key
+          - autonomous_secret
+        labels:
+          tier: backend
+          tag.ct1d: "true"
+          tag.autonomous: "true"
+          environment: "dev"
+          version: "1.0.0-dev"
+
+      - name: cron
+        image: "alpine:3.19"
+        command:
+          - /bin/sh
+          - -c
+          - |
+            apk add --no-cache curl &&
+            echo "*/30 * * * * curl -s -X POST -H 'Authorization: Bearer \$AUTONOMOUS_SECRET' http://localhost:3000/api/autonomous/research" > /etc/crontabs/root &&
+            echo "0 */12 * * * curl -s -X POST -H 'Authorization: Bearer \$AUTONOMOUS_SECRET' http://localhost:3000/api/autonomous/refresh" >> /etc/crontabs/root &&
+            crond -f -l 2
+        resources:
+          cpu: 25
+          memory: 16
+        secrets:
+          - autonomous_secret

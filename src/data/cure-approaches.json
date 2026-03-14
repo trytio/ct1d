@@ -1,0 +1,457 @@
+[
+  {
+    "id": "zimislecel-vertex",
+    "name": "Zimislecel (VX-880)",
+    "organization": "Vertex Pharmaceuticals",
+    "category": "stem_cell",
+    "phase": "phase_3",
+    "description": "Zimislecel consists of fully differentiated, insulin-producing islet cells derived from human embryonic stem cells. These cells are infused into the hepatic portal vein (a blood vessel leading to the liver), where they engraft and begin producing insulin in response to blood sugar levels — essentially replacing the beta cells destroyed by T1D.",
+    "plainLanguageSummary": "Scientists take stem cells and turn them into the exact type of cells your pancreas lost — insulin-producing beta cells. They infuse these cells into your body through a blood vessel near the liver, and they start working like natural beta cells. In trials, 83% of people who received a full dose no longer needed insulin injections after one year.",
+    "mechanism": "Allogeneic stem cell-derived islet cells are differentiated from human embryonic stem cells into mature, glucose-responsive, insulin-producing beta cells in vitro, then transplanted via hepatic portal vein infusion.",
+    "keyFindings": [
+      "83% of participants (10/12) with full dose remained insulin-independent at 1 year",
+      "HbA1c below 7% achieved with over 70% time-in-range",
+      "Some participants achieved over 90% time-in-range",
+      "Phase 3 trial enrolled 50 participants",
+      "FDA fast-track designation granted",
+      "Global regulatory submissions planned for 2026"
+    ],
+    "challenges": [
+      "Requires lifelong immunosuppression to prevent rejection",
+      "Immunosuppression drugs carry side effects and infection risk",
+      "Long-term durability of transplanted cells still being studied",
+      "Manufacturing scale-up for commercial availability"
+    ],
+    "keyStudies": [
+      {
+        "title": "Vertex Presents Positive Data on Zimislecel for Type 1 Diabetes at ADA 2025",
+        "journal": "Vertex Press Release",
+        "year": 2025,
+        "url": "https://news.vrtx.com/news-releases/news-release-details/vertex-presents-positive-data-zimislecel-type-1-diabetes"
+      }
+    ],
+    "relatedTrialNCTIds": ["NCT04786262"],
+    "relatedApproachIds": ["vx264-vertex", "up421-sana", "lantidra-celltrans"],
+    "lastUpdated": "2025-06-01",
+    "tags": ["stem cell", "islet cell", "vertex", "VX-880", "zimislecel", "beta cell replacement", "portal vein"]
+  },
+  {
+    "id": "vx264-vertex",
+    "name": "VX-264 (Encapsulated Cells)",
+    "organization": "Vertex Pharmaceuticals",
+    "category": "encapsulation",
+    "phase": "discontinued",
+    "description": "VX-264 used the same stem cell-derived islet cells as zimislecel but enclosed them in a subcutaneous implantable device designed to protect them from immune attack — eliminating the need for immunosuppression drugs. The encapsulation device was implanted under the skin rather than infused into the liver.",
+    "plainLanguageSummary": "This was Vertex's attempt to put stem cell-derived beta cells inside a protective capsule under the skin, so the immune system couldn't attack them and patients wouldn't need immunosuppression drugs. Unfortunately, the capsule didn't let enough nutrients and oxygen reach the cells, so they couldn't produce enough insulin. The program was stopped in March 2025.",
+    "mechanism": "Stem cell-derived islet cells enclosed in a subcutaneous implantable encapsulation device with a semipermeable membrane designed to allow glucose and insulin exchange while blocking immune cells.",
+    "keyFindings": [
+      "Did not meet its efficacy endpoint",
+      "C-peptide increases were insufficient for clinical benefit",
+      "Encapsulation device had inadequate nutrient and oxygen diffusion",
+      "Program discontinued in March 2025"
+    ],
+    "challenges": [
+      "Encapsulation material blocked sufficient nutrient/oxygen diffusion",
+      "Foreign body response to the implant",
+      "Achieving adequate insulin secretion through the device barrier"
+    ],
+    "keyStudies": [
+      {
+        "title": "Vertex Discontinues VX-264 Encapsulated Cell Therapy Program",
+        "journal": "Vertex Press Release",
+        "year": 2025,
+        "url": "https://news.vrtx.com"
+      }
+    ],
+    "relatedTrialNCTIds": [],
+    "relatedApproachIds": ["zimislecel-vertex", "mit-encapsulation"],
+    "lastUpdated": "2025-03-01",
+    "tags": ["encapsulation", "device", "vertex", "VX-264", "no immunosuppression", "discontinued"]
+  },
+  {
+    "id": "teplizumab-sanofi",
+    "name": "Teplizumab (Tzield)",
+    "organization": "Sanofi",
+    "category": "immunotherapy",
+    "phase": "approved",
+    "description": "Teplizumab is an anti-CD3 monoclonal antibody that modulates T cells — the immune cells responsible for destroying beta cells in T1D. It is the first and only FDA-approved disease-modifying therapy for Type 1 Diabetes. Originally approved to delay the onset of Stage 3 T1D, it is now being reviewed for newly diagnosed patients.",
+    "plainLanguageSummary": "Teplizumab is a drug that calms down the immune cells (T cells) that attack your insulin-producing cells. It's the first medicine ever approved that can actually delay Type 1 Diabetes from fully developing. In people at high risk, it delayed T1D onset by more than 2 years. It's now being reviewed for people who were just diagnosed, to help preserve the beta cells they still have.",
+    "mechanism": "Anti-CD3 monoclonal antibody that binds to CD3 on T cells, modulating their activity and promoting regulatory T cells, thereby reducing the autoimmune destruction of pancreatic beta cells.",
+    "keyFindings": [
+      "FDA approved November 2022 for delaying Stage 3 T1D onset in adults and children 8+",
+      "Delays clinical T1D onset by a median of 2+ years",
+      "PROTECT Phase 3 trial met primary endpoint — significantly slowed C-peptide decline in Stage 3 T1D",
+      "FDA accepted expedited review for newly diagnosed Stage 3 T1D (October 2025)",
+      "Approved in UK, China, Canada, Israel, Saudi Arabia, UAE, Kuwait",
+      "Sanofi investing 40M EUR in production facility expansion"
+    ],
+    "challenges": [
+      "Does not eliminate T1D — delays onset and slows progression",
+      "Requires a 14-day IV infusion course",
+      "Side effects include lymphopenia and cytokine release syndrome",
+      "Long-term durability of effect still being studied",
+      "High cost may limit accessibility"
+    ],
+    "keyStudies": [
+      {
+        "title": "Teplizumab for Prevention of Type 1 Diabetes",
+        "journal": "New England Journal of Medicine",
+        "year": 2019,
+        "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa1902226"
+      }
+    ],
+    "relatedTrialNCTIds": ["NCT03875729"],
+    "relatedApproachIds": ["baricitinib-jdrf"],
+    "lastUpdated": "2025-10-01",
+    "tags": ["immunotherapy", "teplizumab", "tzield", "anti-CD3", "sanofi", "FDA approved", "delay onset", "T cells"]
+  },
+  {
+    "id": "up421-sana",
+    "name": "UP421 (HIP Islet Cells)",
+    "organization": "Sana Biotechnology",
+    "category": "gene_editing",
+    "phase": "phase_1",
+    "description": "UP421 represents arguably the most groundbreaking development of 2025 — the first successful transplantation of CRISPR gene-edited islet cells into a human WITHOUT immunosuppression. Using Sana's proprietary hypoimmune (HIP) technology, donor islet cells are gene-edited to delete HLA class I and II genes, making them invisible to the immune system.",
+    "plainLanguageSummary": "Scientists used CRISPR gene editing to modify donor insulin-producing cells so the immune system can't see them — like giving the cells an invisibility cloak. For the first time in January 2025, these edited cells were transplanted into a person with T1D WITHOUT any immunosuppression drugs. After 6 months, the cells were still alive and producing insulin. This was published in the New England Journal of Medicine.",
+    "mechanism": "CRISPR-Cas12b gene editing deletes HLA class I and II genes from allogeneic donor islet cells, rendering them hypoimmune (invisible to adaptive immune system T cells and B cells), enabling transplantation without immunosuppression.",
+    "keyFindings": [
+      "First-ever transplant of gene-edited islet cells into a human without immunosuppression (January 2025)",
+      "4-week results showed survival and function of transplanted cells with measurable C-peptide",
+      "6-month results confirmed continued cell survival and insulin production",
+      "Published in the New England Journal of Medicine",
+      "No immune rejection detected",
+      "IND filing for SC451 (stem cell-derived version) expected 2026"
+    ],
+    "challenges": [
+      "Very early stage — only one patient so far in investigator-sponsored trial",
+      "Still uses donor islet cells (limited supply); stem cell version (SC451) in development",
+      "Long-term safety of gene-edited cells unknown",
+      "Off-target CRISPR effects require monitoring",
+      "Scalability of gene editing + transplant process"
+    ],
+    "keyStudies": [
+      {
+        "title": "Hypoimmune Islet Cell Transplantation in Type 1 Diabetes",
+        "journal": "New England Journal of Medicine",
+        "year": 2025,
+        "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa2XXX"
+      }
+    ],
+    "relatedTrialNCTIds": [],
+    "relatedApproachIds": ["zimislecel-vertex", "lantidra-celltrans", "sc451-sana"],
+    "lastUpdated": "2025-06-01",
+    "tags": ["CRISPR", "gene editing", "hypoimmune", "HIP", "sana biotechnology", "no immunosuppression", "islet transplant", "UP421"]
+  },
+  {
+    "id": "sc451-sana",
+    "name": "SC451 (Stem Cell + CRISPR)",
+    "organization": "Sana Biotechnology",
+    "category": "gene_editing",
+    "phase": "preclinical",
+    "description": "SC451 combines Sana's CRISPR hypoimmune technology with stem cell-derived islet cells — creating an unlimited supply of immune-invisible, insulin-producing cells. Unlike UP421 (which uses donor islets), SC451 derives cells from stem cells, solving the supply limitation.",
+    "plainLanguageSummary": "This is the next evolution of Sana's breakthrough: instead of using donor cells (which are scarce), they're creating insulin-producing cells from stem cells AND making them invisible to the immune system with CRISPR. This could mean an unlimited, off-the-shelf supply of cells that don't need immunosuppression. IND filing expected in 2026.",
+    "mechanism": "Stem cell-derived islet cells produced at scale in vitro, then CRISPR-edited to delete HLA genes for immune evasion, enabling allogeneic transplantation without immunosuppression.",
+    "keyFindings": [
+      "Combines proven HIP gene editing technology with scalable stem cell manufacturing",
+      "Preclinical data supports the approach based on UP421 clinical results",
+      "IND filing expected 2026"
+    ],
+    "challenges": [
+      "Still preclinical — no human data yet",
+      "Must demonstrate stem cell-derived cells perform as well as donor islets",
+      "Manufacturing complexity of combining two advanced technologies",
+      "Regulatory pathway for gene-edited stem cell products is novel"
+    ],
+    "keyStudies": [],
+    "relatedTrialNCTIds": [],
+    "relatedApproachIds": ["up421-sana", "zimislecel-vertex"],
+    "lastUpdated": "2025-06-01",
+    "tags": ["CRISPR", "stem cell", "hypoimmune", "sana", "SC451", "scalable", "no immunosuppression"]
+  },
+  {
+    "id": "lantidra-celltrans",
+    "name": "Lantidra (Donislecel)",
+    "organization": "CellTrans",
+    "category": "stem_cell",
+    "phase": "approved",
+    "description": "Lantidra is the first FDA-approved allogeneic (deceased donor) pancreatic islet cell therapy. Purified islet cells from deceased donor pancreases are transplanted into patients with severe T1D who cannot manage their blood sugar despite intensive efforts.",
+    "plainLanguageSummary": "Lantidra takes insulin-producing cells from deceased organ donors and transplants them into people with severe T1D. It was approved by the FDA in June 2023 — the first cell therapy ever approved for diabetes. Some patients have been insulin-free for over 5 years. The limitation is that donor organs are scarce and patients need immunosuppression drugs.",
+    "mechanism": "Allogeneic pancreatic islet cells isolated from deceased donor pancreases are purified and infused into the hepatic portal vein, where they engraft and produce insulin.",
+    "keyFindings": [
+      "FDA approved June 2023 — first allogeneic islet cell therapy for T1D",
+      "Significant proportion of patients achieved insulin independence, some lasting 5+ years",
+      "Reduced severe hypoglycemic events",
+      "University Hospitals (Ohio) approved as US administration site in 2025",
+      "FDA approved extended 48-hour shipping protocols for broader distribution"
+    ],
+    "challenges": [
+      "Requires deceased donor pancreas — extremely limited supply",
+      "Requires lifelong immunosuppression",
+      "Reserved for severe cases only (hypoglycemia unawareness)",
+      "Not scalable as a universal cure"
+    ],
+    "keyStudies": [
+      {
+        "title": "From Edmonton Protocol to Lantidra: Evolution of Islet Transplantation",
+        "journal": "Frontiers in Transplantation",
+        "year": 2025,
+        "url": "https://www.frontiersin.org/journals/transplantation/articles/10.3389/frtra.2025.1514956/full"
+      }
+    ],
+    "relatedTrialNCTIds": [],
+    "relatedApproachIds": ["zimislecel-vertex", "up421-sana"],
+    "lastUpdated": "2025-11-01",
+    "tags": ["islet transplant", "donor", "lantidra", "donislecel", "FDA approved", "celltrans"]
+  },
+  {
+    "id": "stanford-hybrid",
+    "name": "Hybrid Immune System Transplant",
+    "organization": "Stanford Medicine",
+    "category": "combination",
+    "phase": "preclinical",
+    "description": "Stanford researchers developed a groundbreaking approach combining blood stem cell transplant with pancreatic islet transplant from a mismatched donor. This creates a 'hybrid immune system' — part original, part donor — that halts the autoimmune attack without ongoing immunosuppression.",
+    "plainLanguageSummary": "Stanford scientists found a way to do two transplants at once: blood stem cells and islet cells from the same donor. This creates a hybrid immune system that teaches the body to accept the new islet cells AND stop attacking its own beta cells. In mice, this completely cured T1D without needing immunosuppression drugs. Published in November 2025.",
+    "mechanism": "Combined hematopoietic stem cell (blood) and pancreatic islet transplant from a single mismatched donor creates mixed chimerism — a hybrid immune system with both host and donor immune cells, establishing tolerance to donor islets and halting autoimmune beta cell destruction.",
+    "keyFindings": [
+      "Completely cured T1D in mouse models",
+      "No ongoing immunosuppression required after transplant",
+      "Mixed chimerism halted both alloimmune rejection AND autoimmune attack",
+      "Published in Journal of Clinical Investigation (November 2025)"
+    ],
+    "challenges": [
+      "Only proven in mice — human trials years away",
+      "Requires deceased donor islets (supply limitation)",
+      "Blood stem cell transplant carries significant risks",
+      "Mixed chimerism approach is complex and requires careful conditioning"
+    ],
+    "keyStudies": [
+      {
+        "title": "Combined Stem Cell and Islet Transplant Cures T1D in Mice",
+        "journal": "Journal of Clinical Investigation",
+        "year": 2025,
+        "url": "https://med.stanford.edu/news/all-news/2025/11/type-1-diabetes-cure.html"
+      }
+    ],
+    "relatedTrialNCTIds": [],
+    "relatedApproachIds": ["lantidra-celltrans", "teplizumab-sanofi"],
+    "lastUpdated": "2025-11-01",
+    "tags": ["stanford", "hybrid immune", "mixed chimerism", "stem cell", "islet transplant", "no immunosuppression", "combination"]
+  },
+  {
+    "id": "baricitinib-jdrf",
+    "name": "Baricitinib (JAK Inhibitor)",
+    "organization": "JDRF / NIDDK",
+    "category": "immunotherapy",
+    "phase": "phase_3",
+    "description": "Baricitinib is a JAK (Janus kinase) inhibitor — a type of drug that blocks specific immune signaling pathways involved in the autoimmune attack on beta cells. Originally approved for rheumatoid arthritis, it is being repurposed for newly diagnosed T1D to preserve remaining beta cell function.",
+    "plainLanguageSummary": "Baricitinib is a pill (not an injection) that blocks certain immune signals involved in the T1D autoimmune attack. It was already approved for arthritis, so its safety profile is well-known. In T1D trials, it helped preserve the insulin-producing cells that newly diagnosed patients still have. It's now in a large Phase 3 trial.",
+    "mechanism": "Selective JAK1/JAK2 inhibitor that blocks intracellular signaling of multiple cytokines involved in autoimmune beta cell destruction, reducing T cell and B cell activation.",
+    "keyFindings": [
+      "Phase 2 data showed preservation of C-peptide (beta cell function) in newly diagnosed T1D",
+      "Oral pill — much easier to administer than infusion-based therapies",
+      "Well-established safety profile from rheumatoid arthritis use",
+      "Phase 3 trial underway"
+    ],
+    "challenges": [
+      "JAK inhibitors carry risks including infection susceptibility",
+      "Does not replace lost beta cells — only preserves remaining ones",
+      "Must be started soon after diagnosis to be effective",
+      "Long-term effects in T1D population unknown"
+    ],
+    "keyStudies": [],
+    "relatedTrialNCTIds": [],
+    "relatedApproachIds": ["teplizumab-sanofi"],
+    "lastUpdated": "2025-06-01",
+    "tags": ["baricitinib", "JAK inhibitor", "immunotherapy", "oral", "pill", "JDRF", "beta cell preservation"]
+  },
+  {
+    "id": "ilet-bionic",
+    "name": "iLet Bionic Pancreas",
+    "organization": "Beta Bionics",
+    "category": "artificial_pancreas",
+    "phase": "approved",
+    "description": "The iLet Bionic Pancreas is a fully automated insulin delivery system that only requires the user's body weight to initialize. Unlike other pump systems, it does NOT require carb counting — the algorithm autonomously learns and adapts to the user's insulin needs.",
+    "plainLanguageSummary": "The iLet is the closest thing to a 'set it and forget it' insulin pump. You just enter your body weight, and its AI algorithm does everything else — no carb counting, no manual boluses. It continuously monitors your glucose (via CGM) and automatically adjusts insulin delivery. FDA cleared and available now.",
+    "mechanism": "Autonomous closed-loop insulin delivery system using a proprietary bionic pancreas algorithm that requires only body weight for initialization. Integrated with CGM for continuous glucose monitoring and automatic insulin dosing.",
+    "keyFindings": [
+      "FDA cleared — commercially available",
+      "No carb counting required — fully autonomous",
+      "Only requires body weight to start",
+      "Improved time-in-range compared to standard pump therapy",
+      "Reduces cognitive burden of diabetes management significantly"
+    ],
+    "challenges": [
+      "Not a cure — still requires insulin and device wear",
+      "Infusion site management required",
+      "Device cost and insurance coverage varies",
+      "Requires CGM sensor replacement"
+    ],
+    "keyStudies": [],
+    "relatedTrialNCTIds": [],
+    "relatedApproachIds": ["omnipod5-insulet", "minimed780g-medtronic"],
+    "lastUpdated": "2025-01-01",
+    "tags": ["bionic pancreas", "artificial pancreas", "closed loop", "no carb counting", "beta bionics", "iLet", "automated"]
+  },
+  {
+    "id": "omnipod5-insulet",
+    "name": "Omnipod 5",
+    "organization": "Insulet Corporation",
+    "category": "artificial_pancreas",
+    "phase": "approved",
+    "description": "Omnipod 5 is the first tubeless, wearable automated insulin delivery system. The small pod adheres directly to the skin and communicates wirelessly with a CGM and smartphone app, automatically adjusting insulin delivery.",
+    "plainLanguageSummary": "Omnipod 5 is a tiny, tubeless pod you stick on your skin that automatically delivers insulin based on your CGM readings. No tubes, no manual pumping. It talks to your phone and adjusts insulin all day and night. Especially popular with kids because there are no tubes to get caught on things.",
+    "mechanism": "Tubeless, wearable insulin pump pod with integrated SmartAdjust algorithm that interfaces with Dexcom G6/G7 CGM for hybrid closed-loop automated insulin delivery.",
+    "keyFindings": [
+      "First tubeless automated insulin delivery system",
+      "FDA cleared for ages 2 and up",
+      "Significant improvement in time-in-range",
+      "No tubing — popular with children and active users",
+      "Smartphone control via app"
+    ],
+    "challenges": [
+      "Not a cure — management tool",
+      "Pod replacement every 3 days",
+      "Still requires some carb input for meals",
+      "Cost and insurance barriers"
+    ],
+    "keyStudies": [],
+    "relatedTrialNCTIds": [],
+    "relatedApproachIds": ["ilet-bionic", "minimed780g-medtronic"],
+    "lastUpdated": "2025-01-01",
+    "tags": ["omnipod", "tubeless", "insulin pump", "closed loop", "insulet", "automated", "wearable"]
+  },
+  {
+    "id": "minimed780g-medtronic",
+    "name": "MiniMed 780G",
+    "organization": "Medtronic",
+    "category": "artificial_pancreas",
+    "phase": "approved",
+    "description": "The MiniMed 780G is an advanced hybrid closed-loop insulin delivery system with automatic basal and correction bolus delivery. It features the SmartGuard algorithm that automatically adjusts insulin every 5 minutes.",
+    "plainLanguageSummary": "Medtronic's latest insulin pump system automatically adjusts your insulin every 5 minutes based on your glucose sensor readings. It handles basal insulin and correction doses on its own. You still bolus for meals, but the system catches and corrects highs and prevents lows automatically.",
+    "mechanism": "Hybrid closed-loop system with SmartGuard algorithm providing automatic basal rate adjustment and automatic correction boluses every 5 minutes based on Guardian 4 CGM sensor data.",
+    "keyFindings": [
+      "Automatic correction boluses every 5 minutes",
+      "FDA cleared for ages 7 and up",
+      "Improved time-in-range vs previous generation",
+      "Guardian 4 sensor integration"
+    ],
+    "challenges": [
+      "Not a cure — management tool",
+      "Tubing required (traditional pump form factor)",
+      "Sensor calibration sometimes needed",
+      "Meal bolusing still required"
+    ],
+    "keyStudies": [],
+    "relatedTrialNCTIds": [],
+    "relatedApproachIds": ["ilet-bionic", "omnipod5-insulet"],
+    "lastUpdated": "2025-01-01",
+    "tags": ["medtronic", "minimed", "780G", "closed loop", "hybrid", "smartguard", "insulin pump"]
+  },
+  {
+    "id": "mit-encapsulation",
+    "name": "MIT Cell Encapsulation Device",
+    "organization": "MIT Koch Institute",
+    "category": "encapsulation",
+    "phase": "preclinical",
+    "description": "MIT researchers are developing an implantable device that shields beta cells from immune attack while allowing glucose and insulin to pass through. Unlike Vertex's failed VX-264, this device uses novel materials designed for better oxygen and nutrient diffusion.",
+    "plainLanguageSummary": "MIT is building a tiny implantable capsule with special materials that let sugar and insulin flow freely but keep immune cells out. In mouse studies, the device protected beta cells for 6 months. They're learning from Vertex's VX-264 failure and using better materials that allow more oxygen to reach the cells inside.",
+    "mechanism": "Biocompatible implantable encapsulation device with engineered semipermeable membrane optimized for oxygen and nutrient diffusion while blocking immune cell infiltration.",
+    "keyFindings": [
+      "Protected beta cells from immune attack for 6 months in mice",
+      "Novel materials improve oxygen diffusion compared to earlier devices",
+      "Approaching Phase 1 clinical trial readiness"
+    ],
+    "challenges": [
+      "Only proven in animal models so far",
+      "Foreign body response remains a challenge",
+      "Long-term device durability unknown",
+      "VX-264 failure shows encapsulation is extremely difficult"
+    ],
+    "keyStudies": [],
+    "relatedTrialNCTIds": [],
+    "relatedApproachIds": ["vx264-vertex"],
+    "lastUpdated": "2025-06-01",
+    "tags": ["encapsulation", "MIT", "Koch Institute", "implantable", "device", "no immunosuppression"]
+  },
+  {
+    "id": "dyrk1a-regeneration",
+    "name": "DYRK1A Inhibitors (Beta Cell Regeneration)",
+    "organization": "Multiple Research Institutions",
+    "category": "beta_cell_regeneration",
+    "phase": "preclinical",
+    "description": "DYRK1A inhibitors are small molecules that can stimulate human beta cells to proliferate (multiply). Combined with GLP-1 receptor agonists, they have shown the ability to drive significant beta cell regeneration in human islets.",
+    "plainLanguageSummary": "These are drugs that could make your remaining beta cells multiply and grow back. The research shows that a specific enzyme blocker (DYRK1A inhibitor), when combined with diabetes drugs like GLP-1 agonists, can make beta cells divide and create new ones. This could potentially regrow the insulin-producing cells that T1D destroyed.",
+    "mechanism": "DYRK1A kinase inhibitors remove cell cycle brakes on human beta cells, enabling proliferation. Combined with GLP-1 receptor agonists, synergistic beta cell proliferation rates of 5-8% per day have been achieved in human islets ex vivo.",
+    "keyFindings": [
+      "Combination of DYRK1A inhibitors + GLP-1 agonists achieves 5-8% daily beta cell proliferation",
+      "Works on human islets (not just animal models)",
+      "Multiple drug candidates in development",
+      "Oral small molecules — potentially easy to administer"
+    ],
+    "challenges": [
+      "Still preclinical — no human trials yet",
+      "New beta cells may still be attacked by the immune system in T1D",
+      "Would likely need to be combined with immunotherapy",
+      "Specificity — ensuring only beta cells proliferate, not other cell types"
+    ],
+    "keyStudies": [],
+    "relatedTrialNCTIds": [],
+    "relatedApproachIds": ["teplizumab-sanofi", "baricitinib-jdrf"],
+    "lastUpdated": "2025-01-01",
+    "tags": ["beta cell regeneration", "DYRK1A", "small molecule", "proliferation", "GLP-1", "regrowth"]
+  },
+  {
+    "id": "tirzepatide-lilly",
+    "name": "Tirzepatide for T1D",
+    "organization": "Eli Lilly",
+    "category": "combination",
+    "phase": "phase_3",
+    "description": "Tirzepatide (marketed as Mounjaro/Zepbound for T2D and obesity) is a dual GIP/GLP-1 receptor agonist being studied in T1D patients. Eli Lilly launched two pivotal Phase 3 trials investigating whether tirzepatide can improve blood sugar control and reduce insulin needs in T1D patients with overweight/obesity.",
+    "plainLanguageSummary": "You may have heard of Mounjaro or Zepbound — the hugely popular diabetes/weight loss drugs. Eli Lilly is now testing whether these drugs can help people with Type 1 Diabetes too. The idea is that by improving how the body handles sugar and reducing insulin resistance, people with T1D could need less insulin and have better control.",
+    "mechanism": "Dual GIP and GLP-1 receptor agonist that enhances insulin sensitivity, slows gastric emptying, reduces appetite, and may have beta cell protective effects.",
+    "keyFindings": [
+      "Two pivotal Phase 3 clinical trials launched for T1D",
+      "Targets T1D patients with overweight/obesity",
+      "Already FDA-approved for T2D and obesity with strong safety data",
+      "Could reduce insulin requirements and improve time-in-range"
+    ],
+    "challenges": [
+      "Not a cure — adjunctive therapy to reduce insulin needs",
+      "GI side effects (nausea, vomiting) are common",
+      "Does not address the autoimmune cause of T1D",
+      "Benefit may be limited to T1D patients with insulin resistance"
+    ],
+    "keyStudies": [],
+    "relatedTrialNCTIds": [],
+    "relatedApproachIds": ["baricitinib-jdrf"],
+    "lastUpdated": "2025-06-01",
+    "tags": ["tirzepatide", "GLP-1", "GIP", "mounjaro", "eli lilly", "insulin reduction", "weight", "T1D"]
+  },
+  {
+    "id": "basta-blood-test",
+    "name": "BASTA Blood Test (Early Detection)",
+    "organization": "Breakthrough T1D / Australian Researchers",
+    "category": "immunotherapy",
+    "phase": "phase_2",
+    "description": "BASTA is a novel diagnostic blood test that detects T1D earlier than any existing method by tracking the actual immune cells causing damage (autoreactive T cells) rather than just measuring antibodies. Earlier detection means earlier intervention with therapies like teplizumab.",
+    "plainLanguageSummary": "Current T1D screening looks for antibodies in the blood, but by the time antibodies appear, damage is already underway. BASTA is a new blood test that directly tracks the killer T cells that are attacking beta cells — catching the disease even earlier. This means doctors could start treatments like Tzield sooner, potentially saving more beta cells.",
+    "mechanism": "Blood-based assay that identifies and quantifies autoreactive CD8+ T cells targeting beta cell antigens, enabling detection of autoimmune activity before seroconversion (antibody appearance).",
+    "keyFindings": [
+      "Detects T1D autoimmune activity earlier than standard antibody screening",
+      "Tracks actual immune cells causing damage, not just antibodies",
+      "Funded by Breakthrough T1D researchers",
+      "Could enable earlier intervention with disease-modifying therapies"
+    ],
+    "challenges": [
+      "Not yet commercially available",
+      "Requires validation in large population studies",
+      "Clinical utility depends on available interventions",
+      "Cost and accessibility considerations"
+    ],
+    "keyStudies": [],
+    "relatedTrialNCTIds": [],
+    "relatedApproachIds": ["teplizumab-sanofi"],
+    "lastUpdated": "2025-06-01",
+    "tags": ["early detection", "blood test", "BASTA", "screening", "T cells", "autoimmunity", "prevention"]
+  }
+]

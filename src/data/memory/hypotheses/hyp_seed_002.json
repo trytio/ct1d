@@ -1,0 +1,33 @@
+{
+  "id": "hyp_seed_002",
+  "title": "Baricitinib + teplizumab dual immunomodulation to preserve beta cell mass in newly diagnosed T1D",
+  "description": "Combining baricitinib (JAK1/JAK2 inhibitor, already FDA-approved for RA) with teplizumab (anti-CD3 antibody, FDA-approved as Tzield for T1D delay) in newly diagnosed T1D patients could preserve greater than 80% of remaining beta cell function. Baricitinib has shown C-peptide preservation in the BANDIT trial, while teplizumab modulates the autoimmune attack. Together, they target different arms of the immune response: teplizumab depletes and exhausts autoreactive T cells, while baricitinib blocks the JAK-STAT inflammatory signaling that recruits new immune effectors.",
+  "category": "immunotherapy",
+  "status": "needs_evidence",
+  "confidence": 45,
+  "reasoning": "Each drug individually has shown partial beta cell preservation. Teplizumab delayed T1D onset by 2+ years in at-risk individuals (landmark TrialNet TN-10 study) and is now FDA-approved. Baricitinib showed preserved C-peptide in the BANDIT trial (phase 2, n=91). The hypothesis is that combining both could be synergistic rather than merely additive, because they target complementary immune pathways. Risk: combining two immunomodulators increases infection risk; no combination trial data exists yet; the window for intervention is narrow (must be given soon after diagnosis while beta cells remain).",
+  "evidence": [
+    {
+      "id": "ev_seed_002a",
+      "type": "supporting",
+      "source": "PMID:37632866",
+      "title": "BANDIT trial: Baricitinib preserves beta cell function in new-onset T1D",
+      "content": "Phase 2 RCT (n=91) showed baricitinib-treated patients had significantly higher stimulated C-peptide levels at 48 weeks compared to placebo. Mean daily insulin dose was 49% lower in the baricitinib group.",
+      "weight": 8,
+      "timestamp": "2023-08-25T00:00:00.000Z"
+    },
+    {
+      "id": "ev_seed_002b",
+      "type": "supporting",
+      "source": "PMID:36288813",
+      "title": "Teplizumab delays T1D onset in at-risk individuals by median 2 years",
+      "content": "TrialNet TN-10 study demonstrated that a single 14-day course of teplizumab delayed clinical T1D diagnosis by a median of 2 years in high-risk individuals with 2+ autoantibodies. Led to FDA approval as Tzield.",
+      "weight": 9,
+      "timestamp": "2022-11-01T00:00:00.000Z"
+    }
+  ],
+  "iterations": 0,
+  "approach": "Dual immunomodulation for beta cell preservation at diagnosis",
+  "createdAt": "2026-03-14T00:00:00.000Z",
+  "updatedAt": "2026-03-14T00:00:00.000Z"
+}

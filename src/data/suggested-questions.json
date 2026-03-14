@@ -1,0 +1,52 @@
+[
+  {
+    "text": "How close are we to a cure for Type 1 Diabetes?",
+    "category": "general",
+    "icon": "Target"
+  },
+  {
+    "text": "Tell me about Vertex's stem cell therapy — VX-880",
+    "category": "stem_cell",
+    "icon": "Microscope"
+  },
+  {
+    "text": "What is Teplizumab and how does it work?",
+    "category": "immunotherapy",
+    "icon": "Shield"
+  },
+  {
+    "text": "What happened with the CRISPR-edited cells that don't need immunosuppression?",
+    "category": "gene_editing",
+    "icon": "Dna"
+  },
+  {
+    "text": "What are the most promising breakthroughs in the last year?",
+    "category": "general",
+    "icon": "TrendingUp"
+  },
+  {
+    "text": "Are there any clinical trials recruiting right now?",
+    "category": "general",
+    "icon": "Search"
+  },
+  {
+    "text": "Can beta cells be regenerated?",
+    "category": "beta_cell_regeneration",
+    "icon": "Sprout"
+  },
+  {
+    "text": "What's the best artificial pancreas system available today?",
+    "category": "artificial_pancreas",
+    "icon": "Cpu"
+  },
+  {
+    "text": "Explain the Stanford hybrid immune system approach",
+    "category": "combination",
+    "icon": "Layers"
+  },
+  {
+    "text": "Why did the VX-264 encapsulation device fail?",
+    "category": "encapsulation",
+    "icon": "Box"
+  }
+]

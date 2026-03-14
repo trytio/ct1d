@@ -1,0 +1,183 @@
+# ═══════════════════════════════════════════════════════════════════════
+# CT1D — AI-Powered Type 1 Diabetes Research Explorer
+# Carlos Deployment — Base Configuration
+# ═══════════════════════════════════════════════════════════════════════
+#
+# Architecture:
+#   ┌──────────┐
+#   │  web ×2  │  ← Next.js app (frontend + API routes)
+#   │  spread  │     Serves UI + handles AI chat + PubMed/ClinicalTrials proxy
+#   └────┬─────┘
+#        │
+#   ┌────┴─────┐
+#   │ agent ×1 │  ← Autonomous research engine
+#   │ binpack  │     Runs 30-min research cycles + 12h data refresh
+#   │ +memory  │     Persistent volume for AI memory (hypotheses, papers, sessions)
+#   └──────────┘
+#
+# External dependencies:
+#   - OpenAI API (GPT-4o) — for AI chat + autonomous research
+#   - PubMed E-utilities API — for live research search
+#   - ClinicalTrials.gov API v2 — for clinical trials data
+#
+# Secrets required:
+#   - openai_api_key — OpenAI API key for GPT-4o
+#   - autonomous_secret — Auth token for autonomous agent cron triggers
+#
+# Usage:
+#   carlos submit deploy/base/ct1d.yaml -a <server>
+#
+# ═══════════════════════════════════════════════════════════════════════
+
+name: ct1d
+job_type: service
+namespace: default
+
+update:
+  max_parallel: 1
+  stagger_secs: 30
+  health_deadline_secs: 180
+  on_failure: rollback
+  auto_revert: true
+  canary: 0
+
+groups:
+  # ── WEB TIER ─────────────────────────────────────────────────────────
+  # Next.js app serving the frontend + API routes.
+  # Handles: landing page, AI chat, cure landscape, research explorer,
+  # clinical trials browser, timeline, papers viewer.
+  - name: web
+    count: 2
+    strategy: spread
+
+    restart:
+      mode: on-failure
+      max_attempts: 5
+      delay_secs: 10
+
+    tasks:
+      - name: nextjs
+        driver: docker
+        image: "ghcr.io/trytio/ct1d:latest"
+        ports:
+          - label: http
+            container: 3000
+            host: 0
+        resources:
+          cpu: 500
+          memory: 512
+        health_check:
+          type: http
+          path: /
+          port_label: http
+          interval_secs: 15
+          timeout_secs: 10
+          unhealthy_threshold: 3
+          healthy_threshold: 2
+          grace_period_secs: 30
+        env:
+          NODE_ENV: "production"
+          CARLOS_OWNER: "ct1d-team"
+          CARLOS_DESCRIPTION: "CT1D web frontend and API"
+          CARLOS_SLA_UPTIME: "0.99"
+          CARLOS_DOCS_URL: "https://github.com/trytio/ct1d"
+        secrets:
+          - openai_api_key
+          - autonomous_secret
+        load_balancer:
+          port: 23000
+          target: http
+          vre_aware: true
+          bind_address: "0.0.0.0"
+        labels:
+          tier: frontend
+          tag.ct1d: "true"
+          tag.ai: "true"
+          version: "1.0.0"
+
+  # ── AUTONOMOUS AGENT TIER ──────────────────────────────────────────
+  # Same container but dedicated to running the autonomous research engine.
+  # Uses cron-triggered API calls to /api/autonomous/research (every 30m)
+  # and /api/autonomous/refresh (every 12h).
+  # Has a persistent volume for AI memory (hypotheses, papers, sessions).
+  - name: agent
+    count: 1
+    strategy: binpack
+
+    restart:
+      mode: on-failure
+      max_attempts: 3
+      delay_secs: 30
+
+    volumes:
+      - name: ai-memory
+        volume_type: replicated
+        source: /data/ct1d/memory
+        replication:
+          replicas: 2
+          sync_interval_secs: 60
+
+    tasks:
+      - name: researcher
+        driver: docker
+        image: "ghcr.io/trytio/ct1d:latest"
+        ports:
+          - label: http
+            container: 3000
+            host: 0
+        resources:
+          cpu: 300
+          memory: 384
+        health_check:
+          type: http
+          path: /api/autonomous/status
+          port_label: http
+          interval_secs: 30
+          timeout_secs: 10
+          unhealthy_threshold: 3
+          healthy_threshold: 2
+          grace_period_secs: 60
+        env:
+          NODE_ENV: "production"
+          CARLOS_OWNER: "ct1d-team"
+          CARLOS_DESCRIPTION: "CT1D autonomous research agent"
+          CARLOS_DEPENDS: "nextjs.web.ct1d:optional"
+          CARLOS_SLA_UPTIME: "0.95"
+        secrets:
+          - openai_api_key
+          - autonomous_secret
+        mounts:
+          - volume: ai-memory
+            destination: /app/src/data/memory
+        labels:
+          tier: backend
+          tag.ct1d: "true"
+          tag.autonomous: "true"
+          tag.ai: "true"
+          version: "1.0.0"
+
+      # Cron sidecar — triggers research cycles and data refreshes
+      - name: cron
+        driver: docker
+        image: "alpine:3.19"
+        command:
+          - /bin/sh
+          - -c
+          - |
+            apk add --no-cache curl &&
+            echo "*/30 * * * * curl -s -X POST -H 'Authorization: Bearer \$AUTONOMOUS_SECRET' http://localhost:3000/api/autonomous/research" > /etc/crontabs/root &&
+            echo "0 */12 * * * curl -s -X POST -H 'Authorization: Bearer \$AUTONOMOUS_SECRET' http://localhost:3000/api/autonomous/refresh" >> /etc/crontabs/root &&
+            crond -f -l 2
+        resources:
+          cpu: 50
+          memory: 32
+        env:
+          CARLOS_DESCRIPTION: "Cron scheduler for autonomous research cycles"
+        secrets:
+          - autonomous_secret
+
+# ── Placement Constraints ─────────────────────────────────────────────
+constraints:
+  - attribute: labels.env
+    operator: "="
+    value: production

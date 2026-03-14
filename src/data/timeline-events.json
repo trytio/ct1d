@@ -1,0 +1,210 @@
+[
+  {
+    "id": "insulin-discovery",
+    "year": 1921,
+    "title": "Insulin Discovered",
+    "description": "Frederick Banting and Charles Best discover insulin at the University of Toronto, transforming T1D from a death sentence into a manageable condition.",
+    "category": "general",
+    "significance": "major"
+  },
+  {
+    "id": "first-insulin-injection",
+    "year": 1922,
+    "month": 1,
+    "title": "First Insulin Injection in a Human",
+    "description": "14-year-old Leonard Thompson becomes the first person to receive insulin injection, marking the beginning of modern diabetes treatment.",
+    "category": "general",
+    "significance": "major"
+  },
+  {
+    "id": "recombinant-insulin",
+    "year": 1978,
+    "title": "Synthetic Human Insulin Created",
+    "description": "Genentech produces the first recombinant human insulin using E. coli bacteria, ending dependence on animal-derived insulin.",
+    "category": "general",
+    "significance": "major"
+  },
+  {
+    "id": "first-insulin-pump",
+    "year": 1978,
+    "title": "First Insulin Pump",
+    "description": "The first portable insulin pump is developed, offering continuous subcutaneous insulin delivery as an alternative to multiple daily injections.",
+    "category": "artificial_pancreas",
+    "significance": "major"
+  },
+  {
+    "id": "autoimmune-discovery",
+    "year": 1974,
+    "title": "T1D Identified as Autoimmune Disease",
+    "description": "Researchers discover that T1D is caused by the immune system attacking insulin-producing beta cells, fundamentally changing the approach to finding a cure.",
+    "category": "immunotherapy",
+    "significance": "major"
+  },
+  {
+    "id": "edmonton-protocol",
+    "year": 2000,
+    "title": "Edmonton Protocol — Islet Transplant Breakthrough",
+    "description": "Dr. James Shapiro and team at University of Alberta achieve insulin independence in 7 T1D patients using a novel islet transplant protocol, proving that cell replacement can work.",
+    "category": "stem_cell",
+    "significance": "major"
+  },
+  {
+    "id": "first-cgm",
+    "year": 1999,
+    "title": "First Continuous Glucose Monitor (CGM)",
+    "description": "The first CGM system is FDA-approved, allowing continuous tracking of glucose levels instead of relying solely on finger pricks.",
+    "category": "artificial_pancreas",
+    "significance": "major"
+  },
+  {
+    "id": "jdrf-artificial-pancreas",
+    "year": 2006,
+    "title": "JDRF Launches Artificial Pancreas Project",
+    "description": "JDRF (now Breakthrough T1D) launches a major initiative to develop closed-loop automated insulin delivery systems.",
+    "category": "artificial_pancreas",
+    "significance": "notable"
+  },
+  {
+    "id": "diy-looping",
+    "year": 2015,
+    "title": "DIY Closed-Loop Movement Begins",
+    "description": "The #WeAreNotWaiting movement creates open-source artificial pancreas systems (OpenAPS), proving that closed-loop technology works and pushing industry forward.",
+    "category": "artificial_pancreas",
+    "significance": "notable"
+  },
+  {
+    "id": "first-closed-loop-fda",
+    "year": 2016,
+    "title": "First FDA-Approved Closed-Loop System",
+    "description": "Medtronic's MiniMed 670G becomes the first FDA-approved hybrid closed-loop insulin delivery system.",
+    "category": "artificial_pancreas",
+    "significance": "major"
+  },
+  {
+    "id": "melton-stem-cells",
+    "year": 2014,
+    "title": "Harvard Creates Functional Beta Cells from Stem Cells",
+    "description": "Dr. Douglas Melton at Harvard generates the first large quantities of functional human beta cells from stem cells in the lab — the foundational work behind Vertex's zimislecel.",
+    "category": "stem_cell",
+    "significance": "major"
+  },
+  {
+    "id": "vertex-acquires-semma",
+    "year": 2019,
+    "title": "Vertex Acquires Semma Therapeutics for $950M",
+    "description": "Vertex Pharmaceuticals acquires Semma Therapeutics (founded on Dr. Melton's work) for $950 million, signaling major pharma commitment to stem cell cure.",
+    "category": "stem_cell",
+    "significance": "notable"
+  },
+  {
+    "id": "crispr-nobel",
+    "year": 2020,
+    "title": "Nobel Prize for CRISPR",
+    "description": "Jennifer Doudna and Emmanuelle Charpentier win the Nobel Prize for CRISPR-Cas9 gene editing — the technology that could make immune-invisible beta cells possible.",
+    "category": "gene_editing",
+    "significance": "notable"
+  },
+  {
+    "id": "vx880-first-patient",
+    "year": 2021,
+    "title": "First Patient Receives VX-880 Stem Cells",
+    "description": "The first patient in the VX-880 clinical trial receives stem cell-derived islet cells, beginning the pivotal journey toward a cell replacement cure.",
+    "category": "stem_cell",
+    "significance": "major"
+  },
+  {
+    "id": "teplizumab-approved",
+    "year": 2022,
+    "month": 11,
+    "title": "Teplizumab (Tzield) FDA Approved",
+    "description": "The FDA approves teplizumab — the first-ever disease-modifying therapy for T1D. It can delay the onset of clinical T1D by more than 2 years in at-risk individuals.",
+    "category": "immunotherapy",
+    "significance": "major"
+  },
+  {
+    "id": "lantidra-approved",
+    "year": 2023,
+    "month": 6,
+    "title": "Lantidra FDA Approved — First Cell Therapy for T1D",
+    "description": "The FDA approves Lantidra (donislecel), the first-ever allogeneic islet cell therapy for T1D, for adults with severe hypoglycemia unawareness.",
+    "category": "stem_cell",
+    "significance": "major"
+  },
+  {
+    "id": "omnipod5-kids",
+    "year": 2023,
+    "title": "Omnipod 5 Cleared for Ages 2+",
+    "description": "The tubeless Omnipod 5 automated insulin delivery system receives FDA clearance for children as young as 2 years old.",
+    "category": "artificial_pancreas",
+    "significance": "notable"
+  },
+  {
+    "id": "ilet-fda-cleared",
+    "year": 2023,
+    "title": "iLet Bionic Pancreas FDA Cleared",
+    "description": "Beta Bionics' iLet Bionic Pancreas receives FDA clearance — the first fully automated insulin pump that requires no carb counting.",
+    "category": "artificial_pancreas",
+    "significance": "notable"
+  },
+  {
+    "id": "sana-first-human",
+    "year": 2025,
+    "month": 1,
+    "title": "First CRISPR-Edited Islet Cells Transplanted Without Immunosuppression",
+    "description": "Sana Biotechnology's UP421 — CRISPR gene-edited hypoimmune islet cells — are transplanted into a human for the first time WITHOUT immunosuppression. Cells survive and produce insulin.",
+    "category": "gene_editing",
+    "significance": "major"
+  },
+  {
+    "id": "vx264-discontinued",
+    "year": 2025,
+    "month": 3,
+    "title": "VX-264 Encapsulated Cells Discontinued",
+    "description": "Vertex discontinues the VX-264 encapsulation device program after it fails to produce sufficient insulin. A setback for the encapsulation approach.",
+    "category": "encapsulation",
+    "significance": "notable"
+  },
+  {
+    "id": "sana-6month",
+    "year": 2025,
+    "month": 6,
+    "title": "Sana's Gene-Edited Cells Still Working at 6 Months",
+    "description": "6-month results confirm that Sana's CRISPR-edited islet cells continue to survive and produce insulin without immunosuppression. Results published in the New England Journal of Medicine.",
+    "category": "gene_editing",
+    "significance": "major"
+  },
+  {
+    "id": "vx880-phase3",
+    "year": 2025,
+    "title": "Zimislecel Enters Phase 3 — 83% Insulin Independence",
+    "description": "Vertex reports that 83% of full-dose participants in the VX-880 trial are insulin-independent at one year. Phase 3 trial with 50 participants is underway. FDA submission planned for 2026.",
+    "category": "stem_cell",
+    "significance": "major"
+  },
+  {
+    "id": "teplizumab-stage3",
+    "year": 2025,
+    "month": 10,
+    "title": "Teplizumab Accepted for Stage 3 T1D Review",
+    "description": "FDA accepts Sanofi's application for teplizumab in newly diagnosed Stage 3 T1D for expedited review, potentially expanding access beyond prevention to treatment.",
+    "category": "immunotherapy",
+    "significance": "notable"
+  },
+  {
+    "id": "stanford-hybrid-cure",
+    "year": 2025,
+    "month": 11,
+    "title": "Stanford Cures T1D in Mice with Hybrid Immune Approach",
+    "description": "Stanford researchers cure T1D in mice using combined blood stem cell + islet transplant that creates a hybrid immune system, eliminating the need for immunosuppression.",
+    "category": "combination",
+    "significance": "major"
+  },
+  {
+    "id": "dexcom-g7-15day",
+    "year": 2025,
+    "title": "Dexcom G7 15-Day Sensor Available",
+    "description": "Dexcom launches the G7 15-day sensor in the US — the longest-lasting FDA-approved wearable CGM, reducing sensor changes from every 10 days to every 15 days.",
+    "category": "artificial_pancreas",
+    "significance": "notable"
+  }
+]

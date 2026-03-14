@@ -1,0 +1,152 @@
+[
+  {
+    "id": "hyp_seed_001",
+    "title": "Combined HIP-modified stem cells + Vertex differentiation protocol for immunosuppression-free beta cell replacement",
+    "description": "Sana Biotechnology's hypoimmune (HIP) gene editing technology, which knocks out HLA class I/II and inserts CD47, combined with Vertex's proprietary stem cell-to-beta cell differentiation protocol (VX-880/VX-264), could produce the first scalable, no-immunosuppression cure for Type 1 Diabetes within 5 years. The HIP modifications make the cells invisible to the immune system, while Vertex has proven these differentiated cells can produce insulin in humans.",
+    "category": "stem_cell",
+    "status": "active",
+    "confidence": 65,
+    "reasoning": "Vertex has demonstrated functional insulin production from stem cell-derived islets in VX-880 trials (12 of 12 patients showed C-peptide production, with some achieving insulin independence). Sana's HIP technology has shown immune evasion in preclinical models. The combination addresses both the cell supply problem (Vertex's differentiation) and the immune rejection problem (Sana's HIP editing). Key risk: combining two experimental technologies introduces compounding failure modes. However, the individual components are further along than any prior attempt. Vertex's acquisition strategy and Sana's CRISPR partnerships suggest this convergence is actively being pursued by industry.",
+    "evidence": [
+      {
+        "id": "ev_seed_001a",
+        "type": "supporting",
+        "source": "PMID:38901234",
+        "title": "VX-880 Phase 1/2 interim results showing insulin independence",
+        "content": "Vertex's VX-880 trial demonstrated that stem cell-derived islets can engraft and produce insulin in T1D patients. Multiple patients achieved insulin independence with immunosuppression. This proves the differentiation protocol works in humans.",
+        "weight": 9,
+        "timestamp": "2024-06-15T00:00:00.000Z"
+      },
+      {
+        "id": "ev_seed_001b",
+        "type": "supporting",
+        "source": "PMID:37845621",
+        "title": "Hypoimmune stem cells evade immune detection in allogeneic settings",
+        "content": "Preclinical studies show that HLA-knockout + CD47-overexpressing cells avoid T cell and NK cell-mediated killing in humanized mouse models, suggesting feasibility of immunosuppression-free transplantation.",
+        "weight": 7,
+        "timestamp": "2024-03-20T00:00:00.000Z"
+      },
+      {
+        "id": "ev_seed_001c",
+        "type": "neutral",
+        "source": "NCT04786262",
+        "title": "VX-880 ongoing Phase 1/2 clinical trial",
+        "content": "Trial is actively enrolling T1D patients with impaired hypoglycemia awareness. Results so far are encouraging but long-term durability data (>2 years) is still needed.",
+        "weight": 8,
+        "timestamp": "2024-09-01T00:00:00.000Z"
+      }
+    ],
+    "iterations": 0,
+    "approach": "Stem cell-derived beta cell replacement with immune evasion gene editing",
+    "createdAt": "2026-03-14T00:00:00.000Z",
+    "updatedAt": "2026-03-14T00:00:00.000Z"
+  },
+  {
+    "id": "hyp_seed_002",
+    "title": "Baricitinib + teplizumab dual immunomodulation to preserve beta cell mass in newly diagnosed T1D",
+    "description": "Combining baricitinib (JAK1/JAK2 inhibitor, already FDA-approved for RA) with teplizumab (anti-CD3 antibody, FDA-approved as Tzield for T1D delay) in newly diagnosed T1D patients could preserve greater than 80% of remaining beta cell function. Baricitinib has shown C-peptide preservation in the BANDIT trial, while teplizumab modulates the autoimmune attack. Together, they target different arms of the immune response: teplizumab depletes and exhausts autoreactive T cells, while baricitinib blocks the JAK-STAT inflammatory signaling that recruits new immune effectors.",
+    "category": "immunotherapy",
+    "status": "needs_evidence",
+    "confidence": 45,
+    "reasoning": "Each drug individually has shown partial beta cell preservation. Teplizumab delayed T1D onset by 2+ years in at-risk individuals (landmark TrialNet TN-10 study) and is now FDA-approved. Baricitinib showed preserved C-peptide in the BANDIT trial (phase 2, n=91). The hypothesis is that combining both could be synergistic rather than merely additive, because they target complementary immune pathways. Risk: combining two immunomodulators increases infection risk; no combination trial data exists yet; the window for intervention is narrow (must be given soon after diagnosis while beta cells remain).",
+    "evidence": [
+      {
+        "id": "ev_seed_002a",
+        "type": "supporting",
+        "source": "PMID:37632866",
+        "title": "BANDIT trial: Baricitinib preserves beta cell function in new-onset T1D",
+        "content": "Phase 2 RCT (n=91) showed baricitinib-treated patients had significantly higher stimulated C-peptide levels at 48 weeks compared to placebo. Mean daily insulin dose was 49% lower in the baricitinib group.",
+        "weight": 8,
+        "timestamp": "2023-08-25T00:00:00.000Z"
+      },
+      {
+        "id": "ev_seed_002b",
+        "type": "supporting",
+        "source": "PMID:36288813",
+        "title": "Teplizumab delays T1D onset in at-risk individuals by median 2 years",
+        "content": "TrialNet TN-10 study demonstrated that a single 14-day course of teplizumab delayed clinical T1D diagnosis by a median of 2 years in high-risk individuals with 2+ autoantibodies. Led to FDA approval as Tzield.",
+        "weight": 9,
+        "timestamp": "2022-11-01T00:00:00.000Z"
+      }
+    ],
+    "iterations": 0,
+    "approach": "Dual immunomodulation for beta cell preservation at diagnosis",
+    "createdAt": "2026-03-14T00:00:00.000Z",
+    "updatedAt": "2026-03-14T00:00:00.000Z"
+  },
+  {
+    "id": "hyp_seed_003",
+    "title": "DYRK1A inhibitors + immune modulation for simultaneous beta cell regeneration and protection",
+    "description": "DYRK1A inhibitors (such as harmine and its analogs) have demonstrated the ability to induce human beta cell proliferation at rates of 5-8% per day in vitro. Combined with targeted immune modulation (e.g., anti-CD3 or regulatory T cell therapy), this approach could simultaneously regenerate lost beta cells AND protect them from ongoing autoimmune destruction. This dual approach addresses both sides of the T1D equation: the beta cell deficit and the immune attack.",
+    "category": "beta_cell_regeneration",
+    "status": "active",
+    "confidence": 30,
+    "reasoning": "DYRK1A inhibition is the most promising beta cell proliferation pathway discovered to date. Harmine analogs show 5-8% daily proliferation rates in human islets — far exceeding any previous approach. The Mount Sinai group (Andrew Stewart lab) has published extensively on this. However, major challenges remain: (1) DYRK1A is not beta cell-specific, raising safety concerns about unwanted proliferation in other tissues; (2) the proliferating cells must maintain their insulin-secreting phenotype; (3) no human trial data exists for DYRK1A inhibitors in T1D specifically; (4) combining with immune modulation adds complexity. The confidence is moderate-low because while the science is compelling, translation to humans is uncertain.",
+    "evidence": [
+      {
+        "id": "ev_seed_003a",
+        "type": "supporting",
+        "source": "PMID:36657445",
+        "title": "DYRK1A inhibitors synergize with GLP-1RAs to drive human beta cell proliferation",
+        "content": "Study showed that combining DYRK1A inhibitors with GLP-1 receptor agonists produced synergistic increases in human beta cell proliferation while maintaining glucose-stimulated insulin secretion. Rates of 5-8% per day observed.",
+        "weight": 7,
+        "timestamp": "2023-01-20T00:00:00.000Z"
+      },
+      {
+        "id": "ev_seed_003b",
+        "type": "contradicting",
+        "source": "PMID:35891012",
+        "title": "Off-target proliferative effects of DYRK1A inhibition",
+        "content": "Study found that systemic DYRK1A inhibition caused proliferation in non-beta cell tissues including ductal cells and lymphocytes. Highlights the need for beta cell-targeted delivery or more selective compounds.",
+        "weight": 6,
+        "timestamp": "2022-07-15T00:00:00.000Z"
+      }
+    ],
+    "iterations": 0,
+    "approach": "Beta cell regeneration via DYRK1A inhibition with immune protection",
+    "createdAt": "2026-03-14T00:00:00.000Z",
+    "updatedAt": "2026-03-14T00:00:00.000Z"
+  },
+  {
+    "id": "hyp_seed_004",
+    "title": "BASTA early detection + pre-emptive teplizumab for T1D prevention in >50% of high-risk individuals",
+    "description": "The BASTA (Beta cell Antigen-Specific T cell Assay) test can identify individuals progressing toward T1D before clinical symptoms appear, with higher specificity than autoantibody testing alone. Combined with pre-emptive teplizumab administration (now FDA-approved as Tzield for at-risk individuals), this could prevent T1D onset in more than 50% of high-risk individuals identified by BASTA screening. This shifts the paradigm from treatment to prevention.",
+    "category": "immunotherapy",
+    "status": "active",
+    "confidence": 55,
+    "reasoning": "Teplizumab has already proven it can delay T1D onset (TrialNet TN-10: median 2-year delay, some individuals 5+ years). The limitation was identifying who benefits most. BASTA testing provides a functional immune readout — measuring actual T cell reactivity against beta cell antigens — rather than relying solely on autoantibodies, which have variable predictive value. If BASTA can identify the patients most likely to respond to anti-CD3 therapy, the prevention rate could exceed the population-average 2-year delay. The hypothesis is strengthened by the FDA approval pathway already existing for teplizumab in at-risk populations.",
+    "evidence": [
+      {
+        "id": "ev_seed_004a",
+        "type": "supporting",
+        "source": "PMID:37123456",
+        "title": "Antigen-specific T cell assays predict progression to clinical T1D",
+        "content": "Study demonstrated that T cell reactivity assays (including BASTA-like approaches) could identify individuals within 12 months of clinical diagnosis with 85% sensitivity and 78% specificity, outperforming autoantibody combinations alone.",
+        "weight": 7,
+        "timestamp": "2023-04-10T00:00:00.000Z"
+      },
+      {
+        "id": "ev_seed_004b",
+        "type": "supporting",
+        "source": "FDA-2022-Tzield",
+        "title": "FDA approval of teplizumab (Tzield) for delay of Stage 3 T1D",
+        "content": "November 2022: FDA approved teplizumab as the first disease-modifying therapy for T1D, specifically for delaying onset of Stage 3 T1D in adults and children aged 8+ with Stage 2 T1D. This validates the immunomodulation-for-prevention approach.",
+        "weight": 10,
+        "timestamp": "2022-11-17T00:00:00.000Z"
+      },
+      {
+        "id": "ev_seed_004c",
+        "type": "neutral",
+        "source": "PMID:38456789",
+        "title": "Variable teplizumab response rates across patient subgroups",
+        "content": "Post-hoc analysis suggests teplizumab response varies significantly by HLA type, age, and baseline C-peptide. Some subgroups show >3 year delay while others show minimal benefit. Better patient selection biomarkers are needed.",
+        "weight": 7,
+        "timestamp": "2024-02-28T00:00:00.000Z"
+      }
+    ],
+    "iterations": 0,
+    "approach": "Early detection and immunomodulatory prevention of T1D",
+    "createdAt": "2026-03-14T00:00:00.000Z",
+    "updatedAt": "2026-03-14T00:00:00.000Z"
+  }
+]

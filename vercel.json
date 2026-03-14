@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/autonomous/research",
+      "schedule": "*/30 * * * *"
+    },
+    {
+      "path": "/api/autonomous/refresh",
+      "schedule": "0 */12 * * *"
+    }
+  ]
+}

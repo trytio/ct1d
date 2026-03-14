@@ -1,0 +1,42 @@
+{
+  "id": "hyp_seed_001",
+  "title": "Combined HIP-modified stem cells + Vertex differentiation protocol for immunosuppression-free beta cell replacement",
+  "description": "Sana Biotechnology's hypoimmune (HIP) gene editing technology, which knocks out HLA class I/II and inserts CD47, combined with Vertex's proprietary stem cell-to-beta cell differentiation protocol (VX-880/VX-264), could produce the first scalable, no-immunosuppression cure for Type 1 Diabetes within 5 years. The HIP modifications make the cells invisible to the immune system, while Vertex has proven these differentiated cells can produce insulin in humans.",
+  "category": "stem_cell",
+  "status": "active",
+  "confidence": 65,
+  "reasoning": "Vertex has demonstrated functional insulin production from stem cell-derived islets in VX-880 trials (12 of 12 patients showed C-peptide production, with some achieving insulin independence). Sana's HIP technology has shown immune evasion in preclinical models. The combination addresses both the cell supply problem (Vertex's differentiation) and the immune rejection problem (Sana's HIP editing). Key risk: combining two experimental technologies introduces compounding failure modes. However, the individual components are further along than any prior attempt. Vertex's acquisition strategy and Sana's CRISPR partnerships suggest this convergence is actively being pursued by industry.",
+  "evidence": [
+    {
+      "id": "ev_seed_001a",
+      "type": "supporting",
+      "source": "PMID:38901234",
+      "title": "VX-880 Phase 1/2 interim results showing insulin independence",
+      "content": "Vertex's VX-880 trial demonstrated that stem cell-derived islets can engraft and produce insulin in T1D patients. Multiple patients achieved insulin independence with immunosuppression. This proves the differentiation protocol works in humans.",
+      "weight": 9,
+      "timestamp": "2024-06-15T00:00:00.000Z"
+    },
+    {
+      "id": "ev_seed_001b",
+      "type": "supporting",
+      "source": "PMID:37845621",
+      "title": "Hypoimmune stem cells evade immune detection in allogeneic settings",
+      "content": "Preclinical studies show that HLA-knockout + CD47-overexpressing cells avoid T cell and NK cell-mediated killing in humanized mouse models, suggesting feasibility of immunosuppression-free transplantation.",
+      "weight": 7,
+      "timestamp": "2024-03-20T00:00:00.000Z"
+    },
+    {
+      "id": "ev_seed_001c",
+      "type": "neutral",
+      "source": "NCT04786262",
+      "title": "VX-880 ongoing Phase 1/2 clinical trial",
+      "content": "Trial is actively enrolling T1D patients with impaired hypoglycemia awareness. Results so far are encouraging but long-term durability data (>2 years) is still needed.",
+      "weight": 8,
+      "timestamp": "2024-09-01T00:00:00.000Z"
+    }
+  ],
+  "iterations": 0,
+  "approach": "Stem cell-derived beta cell replacement with immune evasion gene editing",
+  "createdAt": "2026-03-14T00:00:00.000Z",
+  "updatedAt": "2026-03-14T00:00:00.000Z"
+}
