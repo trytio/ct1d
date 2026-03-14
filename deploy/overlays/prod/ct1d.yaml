@@ -63,7 +63,7 @@ groups:
 
   - name: agent
     count: 1
-    strategy: binpack
+    strategy: bin_pack
     resilience:
       min_available: 0
     volumes:

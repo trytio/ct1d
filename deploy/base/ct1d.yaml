@@ -104,7 +104,7 @@ groups:
   # Has a persistent volume for AI memory (hypotheses, papers, sessions).
   - name: agent
     count: 1
-    strategy: binpack
+    strategy: bin_pack
 
     restart:
       mode: on-failure

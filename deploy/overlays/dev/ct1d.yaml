@@ -39,7 +39,7 @@ groups:
 
   - name: agent
     count: 1
-    strategy: binpack
+    strategy: bin_pack
     tasks:
       - name: researcher
         image: "ct1d:latest"
