@@ -70,16 +70,22 @@ groups:
       - name: postgres
         driver: docker
         image: "postgres:16-alpine"
+        command:
+          - /bin/sh
+          - -c
+          - |
+            export POSTGRES_PASSWORD="$DB_PASSWORD"
+            exec docker-entrypoint.sh postgres
         ports:
           - label: db
             container: 5432
-            host: 5432
+            host: 0
         resources:
           cpu: 300
           memory: 512
         health_check:
-          type: script
-          command: ["pg_isready", "-U", "ct1d"]
+          type: tcp
+          port_label: db
           interval_secs: 10
           timeout_secs: 5
           unhealthy_threshold: 3
@@ -92,10 +98,9 @@ groups:
           CARLOS_OWNER: "ct1d-team"
           CARLOS_DESCRIPTION: "CT1D PostgreSQL — VRE replicated research database"
           CARLOS_SLA_UPTIME: "0.999"
+          
         secrets:
           - db_password
-        secret_env:
-          POSTGRES_PASSWORD: db_password
         mounts:
           - volume: pgdata
             destination: /var/lib/postgresql/data
@@ -145,7 +150,7 @@ groups:
           grace_period_secs: 30
         env:
           NODE_ENV: "production"
-          DATABASE_URL: "postgresql://ct1d:${db_password}@postgres.db.ct1d:5432/ct1d"
+          DATABASE_URL: "postgresql://ct1d:<DB_PASSWORD>@<CARLOS_LB_HOST>:25432/ct1d"
           CARLOS_OWNER: "ct1d-team"
           CARLOS_DESCRIPTION: "CT1D web frontend and API"
           CARLOS_DEPENDS: "postgres.db.ct1d:required"
@@ -203,7 +208,7 @@ groups:
           grace_period_secs: 60
         env:
           NODE_ENV: "production"
-          DATABASE_URL: "postgresql://ct1d:${db_password}@postgres.db.ct1d:5432/ct1d"
+          DATABASE_URL: "postgresql://ct1d:<DB_PASSWORD>@<CARLOS_LB_HOST>:25432/ct1d"
           CARLOS_OWNER: "ct1d-team"
           CARLOS_DESCRIPTION: "CT1D autonomous research agent"
           CARLOS_DEPENDS: "postgres.db.ct1d:required"
@@ -241,7 +246,3 @@ groups:
           - autonomous_secret
 
 # ── Placement Constraints ─────────────────────────────────────────────
-constraints:
-  - attribute: labels.env
-    operator: "="
-    value: production
