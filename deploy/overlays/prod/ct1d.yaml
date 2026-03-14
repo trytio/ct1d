@@ -17,7 +17,7 @@ groups:
       cooldown: 30
     tasks:
       - name: nextjs
-        image: "ghcr.io/trytio/ct1d:latest"
+        image: "ct1d:latest"
         ports:
           - label: http
             container: 3000
@@ -76,7 +76,7 @@ groups:
           quorum: strong
     tasks:
       - name: researcher
-        image: "ghcr.io/trytio/ct1d:latest"
+        image: "ct1d:latest"
         ports:
           - label: http
             container: 3000

@@ -59,7 +59,7 @@ groups:
     tasks:
       - name: nextjs
         driver: docker
-        image: "ghcr.io/trytio/ct1d:latest"
+        image: "ct1d:latest"
         ports:
           - label: http
             container: 3000
@@ -122,7 +122,7 @@ groups:
     tasks:
       - name: researcher
         driver: docker
-        image: "ghcr.io/trytio/ct1d:latest"
+        image: "ct1d:latest"
         ports:
           - label: http
             container: 3000

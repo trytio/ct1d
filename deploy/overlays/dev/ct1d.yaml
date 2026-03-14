@@ -6,7 +6,7 @@ groups:
     count: 1
     tasks:
       - name: nextjs
-        image: "ghcr.io/trytio/ct1d:latest"
+        image: "ct1d:latest"
         ports:
           - label: http
             container: 3000
@@ -42,7 +42,7 @@ groups:
     strategy: binpack
     tasks:
       - name: researcher
-        image: "ghcr.io/trytio/ct1d:latest"
+        image: "ct1d:latest"
         ports:
           - label: http
             container: 3000
