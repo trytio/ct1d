@@ -20,8 +20,9 @@
 #   - PubMed E-utilities API — for live research search
 #   - ClinicalTrials.gov API v2 — for clinical trials data
 #
-# Secrets required:
-#   - openai_api_key — OpenAI API key for GPT-4o
+# Secrets required (use ONE of the OpenAI auth methods):
+#   - openai_api_key — Standard API key from platform.openai.com (sk-...)
+#   - codex_auth_token — OAuth token from Codex CLI (~/.codex/auth.json)
 #   - autonomous_secret — Auth token for autonomous agent cron triggers
 #
 # Usage:
@@ -83,6 +84,7 @@ groups:
           CARLOS_DOCS_URL: "https://github.com/trytio/ct1d"
         secrets:
           - openai_api_key
+          - codex_auth_token
           - autonomous_secret
         load_balancer:
           port: 23000
@@ -145,6 +147,7 @@ groups:
           CARLOS_SLA_UPTIME: "0.95"
         secrets:
           - openai_api_key
+          - codex_auth_token
           - autonomous_secret
         mounts:
           - volume: ai-memory

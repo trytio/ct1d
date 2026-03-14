@@ -29,6 +29,7 @@ groups:
           LOG_LEVEL: "debug"
         secrets:
           - openai_api_key
+          - codex_auth_token
           - autonomous_secret
         labels:
           tier: frontend
@@ -63,6 +64,7 @@ groups:
           DEBUG: "true"
         secrets:
           - openai_api_key
+          - codex_auth_token
           - autonomous_secret
         labels:
           tier: backend

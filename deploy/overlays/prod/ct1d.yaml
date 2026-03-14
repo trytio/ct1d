@@ -39,6 +39,7 @@ groups:
           CARLOS_SLA_UPTIME: "0.999"
         secrets:
           - openai_api_key
+          - codex_auth_token
           - autonomous_secret
         load_balancer:
           port: 23000
@@ -97,6 +98,7 @@ groups:
           CARLOS_SLA_UPTIME: "0.99"
         secrets:
           - openai_api_key
+          - codex_auth_token
           - autonomous_secret
         mounts:
           - volume: ai-memory
