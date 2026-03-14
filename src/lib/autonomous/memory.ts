@@ -1,6 +1,4 @@
-import { readFile, writeFile, readdir, mkdir } from "fs/promises";
-import { existsSync } from "fs";
-import path from "path";
+import { query, withTransaction } from "@/lib/db";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -10,18 +8,18 @@ export interface Hypothesis {
   id: string;
   title: string;
   description: string;
-  category: string; // stem_cell, immunotherapy, gene_editing, etc.
+  category: string;
   status:
     | "active"
     | "promising"
     | "needs_evidence"
     | "disproven"
     | "validated";
-  confidence: number; // 0-100
+  confidence: number;
   reasoning: string;
   evidence: EvidenceItem[];
   iterations: number;
-  approach: string; // What cure approach this relates to
+  approach: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -29,10 +27,10 @@ export interface Hypothesis {
 export interface EvidenceItem {
   id: string;
   type: "supporting" | "contradicting" | "neutral";
-  source: string; // PubMed PMID, ClinicalTrials NCT, etc.
+  source: string;
   title: string;
   content: string;
-  weight: number; // 1-10 based on study quality
+  weight: number;
   timestamp: string;
 }
 
@@ -46,7 +44,7 @@ export interface ResearchSession {
   hypothesesUpdated: string[];
   hypothesesCreated: string[];
   papersUpdated: string[];
-  duration: number; // ms
+  duration: number;
   tokensUsed: number;
   summary: string;
 }
@@ -59,7 +57,7 @@ export interface ScientificPaper {
   version: number;
   sections: PaperSection[];
   methodology: string;
-  certaintyLevel: number; // 0-100
+  certaintyLevel: number;
   limitations: string[];
   citations: Citation[];
   hypothesisIds: string[];
@@ -102,20 +100,6 @@ export interface MemoryStats {
 }
 
 // ---------------------------------------------------------------------------
-// Paths
-// ---------------------------------------------------------------------------
-
-const MEMORY_ROOT = path.join(process.cwd(), "src", "data", "memory");
-
-const DIRS = {
-  hypotheses: path.join(MEMORY_ROOT, "hypotheses"),
-  sessions: path.join(MEMORY_ROOT, "sessions"),
-  papers: path.join(MEMORY_ROOT, "papers"),
-  knowledge: path.join(MEMORY_ROOT, "knowledge"),
-  evidence: path.join(MEMORY_ROOT, "evidence"),
-} as const;
-
-// ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
@@ -126,93 +110,94 @@ export function generateId(prefix: string): string {
   return `${prefix}_${ts}_${rand}`;
 }
 
-async function ensureDir(dirPath: string): Promise<void> {
-  if (!existsSync(dirPath)) {
-    await mkdir(dirPath, { recursive: true });
-  }
-}
-
-async function readJsonFile<T>(filePath: string): Promise<T | null> {
-  try {
-    const raw = await readFile(filePath, "utf-8");
-    return JSON.parse(raw) as T;
-  } catch {
-    return null;
-  }
-}
-
-async function writeJsonFile<T>(filePath: string, data: T): Promise<void> {
-  const dir = path.dirname(filePath);
-  await ensureDir(dir);
-  await writeFile(filePath, JSON.stringify(data, null, 2), "utf-8");
-}
-
-async function listJsonFiles(dirPath: string): Promise<string[]> {
-  await ensureDir(dirPath);
-  try {
-    const files = await readdir(dirPath);
-    return files.filter((f) => f.endsWith(".json"));
-  } catch {
-    return [];
-  }
-}
-
-async function loadAllFromDir<T>(dirPath: string): Promise<T[]> {
-  const files = await listJsonFiles(dirPath);
-  const items: T[] = [];
-  for (const file of files) {
-    const item = await readJsonFile<T>(path.join(dirPath, file));
-    if (item) items.push(item);
-  }
-  return items;
-}
-
 // ---------------------------------------------------------------------------
 // Hypotheses
 // ---------------------------------------------------------------------------
 
 export async function saveHypothesis(h: Hypothesis): Promise<void> {
-  const filePath = path.join(DIRS.hypotheses, `${h.id}.json`);
-  await writeJsonFile(filePath, h);
+  await query(
+    `INSERT INTO hypotheses (id, title, description, category, status, confidence, reasoning, approach, iterations, created_at, updated_at)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+     ON CONFLICT (id) DO UPDATE SET
+       title = EXCLUDED.title,
+       description = EXCLUDED.description,
+       category = EXCLUDED.category,
+       status = EXCLUDED.status,
+       confidence = EXCLUDED.confidence,
+       reasoning = EXCLUDED.reasoning,
+       approach = EXCLUDED.approach,
+       iterations = EXCLUDED.iterations,
+       updated_at = EXCLUDED.updated_at`,
+    [
+      h.id, h.title, h.description, h.category, h.status,
+      h.confidence, h.reasoning, h.approach, h.iterations,
+      h.createdAt, h.updatedAt,
+    ]
+  );
 }
 
 export async function getHypotheses(): Promise<Hypothesis[]> {
-  // Load individual hypothesis files (exclude seed.json which is an array)
-  await ensureDir(DIRS.hypotheses);
-  const files = await readdir(DIRS.hypotheses);
-  const individualFiles = files.filter(
-    (f) => f.endsWith(".json") && f !== "seed.json"
+  const result = await query(
+    `SELECT h.*,
+       COALESCE(
+         json_agg(
+           json_build_object(
+             'id', e.id, 'type', e.type, 'source', e.source,
+             'title', e.title, 'content', e.content, 'weight', e.weight,
+             'timestamp', e.created_at
+           )
+         ) FILTER (WHERE e.id IS NOT NULL), '[]'
+       ) AS evidence
+     FROM hypotheses h
+     LEFT JOIN evidence e ON e.hypothesis_id = h.id
+     GROUP BY h.id
+     ORDER BY h.updated_at DESC`
   );
 
-  let hypotheses: Hypothesis[] = [];
-
-  if (individualFiles.length > 0) {
-    for (const file of individualFiles) {
-      const h = await readJsonFile<Hypothesis>(
-        path.join(DIRS.hypotheses, file)
-      );
-      if (h && h.id && h.title) hypotheses.push(h);
-    }
-  } else {
-    // No individual files — load from seed.json and split into individual files
-    const seedPath = path.join(DIRS.hypotheses, "seed.json");
-    const seeds = await readJsonFile<Hypothesis[]>(seedPath);
-    if (seeds && Array.isArray(seeds)) {
-      for (const seed of seeds) {
-        await saveHypothesis(seed);
-      }
-      hypotheses = seeds;
-    }
-  }
-
-  return hypotheses.sort(
-    (a, b) =>
-      new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
-  );
+  return result.rows.map(rowToHypothesis);
 }
 
 export async function getHypothesis(id: string): Promise<Hypothesis | null> {
-  return readJsonFile<Hypothesis>(path.join(DIRS.hypotheses, `${id}.json`));
+  const result = await query(
+    `SELECT h.*,
+       COALESCE(
+         json_agg(
+           json_build_object(
+             'id', e.id, 'type', e.type, 'source', e.source,
+             'title', e.title, 'content', e.content, 'weight', e.weight,
+             'timestamp', e.created_at
+           )
+         ) FILTER (WHERE e.id IS NOT NULL), '[]'
+       ) AS evidence
+     FROM hypotheses h
+     LEFT JOIN evidence e ON e.hypothesis_id = h.id
+     WHERE h.id = $1
+     GROUP BY h.id`,
+    [id]
+  );
+
+  if (result.rows.length === 0) return null;
+  return rowToHypothesis(result.rows[0]);
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function rowToHypothesis(row: any): Hypothesis {
+  return {
+    id: row.id,
+    title: row.title,
+    description: row.description,
+    category: row.category,
+    status: row.status,
+    confidence: row.confidence,
+    reasoning: row.reasoning,
+    approach: row.approach,
+    iterations: row.iterations,
+    evidence: typeof row.evidence === "string"
+      ? JSON.parse(row.evidence)
+      : row.evidence,
+    createdAt: row.created_at?.toISOString?.() ?? row.created_at,
+    updatedAt: row.updated_at?.toISOString?.() ?? row.updated_at,
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -223,24 +208,25 @@ export async function saveEvidence(
   e: EvidenceItem,
   hypothesisId: string
 ): Promise<void> {
-  // Store evidence in its own directory for global lookup
-  const evidencePath = path.join(DIRS.evidence, `${e.id}.json`);
-  await writeJsonFile(evidencePath, { ...e, hypothesisId });
+  await withTransaction(async (client) => {
+    await client.query(
+      `INSERT INTO evidence (id, hypothesis_id, type, source, title, content, weight, created_at)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+       ON CONFLICT (id) DO UPDATE SET
+         type = EXCLUDED.type,
+         source = EXCLUDED.source,
+         title = EXCLUDED.title,
+         content = EXCLUDED.content,
+         weight = EXCLUDED.weight`,
+      [e.id, hypothesisId, e.type, e.source, e.title, e.content, e.weight, e.timestamp]
+    );
 
-  // Also attach evidence to the hypothesis
-  const hypothesis = await getHypothesis(hypothesisId);
-  if (hypothesis) {
-    const exists = hypothesis.evidence.some((ex) => ex.id === e.id);
-    if (!exists) {
-      hypothesis.evidence.push(e);
-    } else {
-      hypothesis.evidence = hypothesis.evidence.map((ex) =>
-        ex.id === e.id ? e : ex
-      );
-    }
-    hypothesis.updatedAt = new Date().toISOString();
-    await saveHypothesis(hypothesis);
-  }
+    // Touch the parent hypothesis
+    await client.query(
+      `UPDATE hypotheses SET updated_at = NOW() WHERE id = $1`,
+      [hypothesisId]
+    );
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -248,23 +234,54 @@ export async function saveEvidence(
 // ---------------------------------------------------------------------------
 
 export async function saveSession(s: ResearchSession): Promise<void> {
-  const filePath = path.join(DIRS.sessions, `${s.id}.json`);
-  await writeJsonFile(filePath, s);
+  await query(
+    `INSERT INTO sessions (id, cycle_number, focus, approach, findings, hypotheses_updated, hypotheses_created, papers_updated, duration_ms, tokens_used, summary, created_at)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+     ON CONFLICT (id) DO UPDATE SET
+       summary = EXCLUDED.summary,
+       findings = EXCLUDED.findings`,
+    [
+      s.id, s.cycleNumber, s.focus, s.approach,
+      JSON.stringify(s.findings),
+      JSON.stringify(s.hypothesesUpdated),
+      JSON.stringify(s.hypothesesCreated),
+      JSON.stringify(s.papersUpdated),
+      s.duration, s.tokensUsed, s.summary, s.timestamp,
+    ]
+  );
 }
 
 export async function getSessions(limit?: number): Promise<ResearchSession[]> {
-  const sessions = await loadAllFromDir<ResearchSession>(DIRS.sessions);
-  sessions.sort(
-    (a, b) =>
-      new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
-  );
-  return limit ? sessions.slice(0, limit) : sessions;
+  const sql = limit
+    ? `SELECT * FROM sessions ORDER BY created_at DESC LIMIT $1`
+    : `SELECT * FROM sessions ORDER BY created_at DESC`;
+  const result = await query(sql, limit ? [limit] : []);
+  return result.rows.map(rowToSession);
 }
 
 export async function getNextCycleNumber(): Promise<number> {
-  const sessions = await getSessions();
-  if (sessions.length === 0) return 1;
-  return Math.max(...sessions.map((s) => s.cycleNumber)) + 1;
+  const result = await query(
+    `SELECT COALESCE(MAX(cycle_number), 0) + 1 AS next FROM sessions`
+  );
+  return result.rows[0].next;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function rowToSession(row: any): ResearchSession {
+  return {
+    id: row.id,
+    timestamp: row.created_at?.toISOString?.() ?? row.created_at,
+    cycleNumber: row.cycle_number,
+    focus: row.focus,
+    approach: row.approach,
+    findings: row.findings ?? [],
+    hypothesesUpdated: row.hypotheses_updated ?? [],
+    hypothesesCreated: row.hypotheses_created ?? [],
+    papersUpdated: row.papers_updated ?? [],
+    duration: row.duration_ms,
+    tokensUsed: row.tokens_used,
+    summary: row.summary,
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -272,19 +289,66 @@ export async function getNextCycleNumber(): Promise<number> {
 // ---------------------------------------------------------------------------
 
 export async function savePaper(p: ScientificPaper): Promise<void> {
-  const filePath = path.join(DIRS.papers, `${p.id}.json`);
-  await writeJsonFile(filePath, p);
-}
-
-export async function getPapers(): Promise<ScientificPaper[]> {
-  const papers = await loadAllFromDir<ScientificPaper>(DIRS.papers);
-  return papers.sort(
-    (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+  await query(
+    `INSERT INTO papers (id, title, abstract, status, version, sections, methodology, certainty_level, limitations, citations, hypothesis_ids, category, review_history, created_at, updated_at)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+     ON CONFLICT (id) DO UPDATE SET
+       title = EXCLUDED.title,
+       abstract = EXCLUDED.abstract,
+       status = EXCLUDED.status,
+       version = EXCLUDED.version,
+       sections = EXCLUDED.sections,
+       methodology = EXCLUDED.methodology,
+       certainty_level = EXCLUDED.certainty_level,
+       limitations = EXCLUDED.limitations,
+       citations = EXCLUDED.citations,
+       hypothesis_ids = EXCLUDED.hypothesis_ids,
+       category = EXCLUDED.category,
+       review_history = EXCLUDED.review_history,
+       updated_at = EXCLUDED.updated_at`,
+    [
+      p.id, p.title, p.abstract, p.status, p.version,
+      JSON.stringify(p.sections), p.methodology, p.certaintyLevel,
+      JSON.stringify(p.limitations), JSON.stringify(p.citations),
+      JSON.stringify(p.hypothesisIds), p.category,
+      JSON.stringify(p.reviewHistory),
+      p.createdAt, p.updatedAt,
+    ]
   );
 }
 
+export async function getPapers(): Promise<ScientificPaper[]> {
+  const result = await query(
+    `SELECT * FROM papers ORDER BY updated_at DESC`
+  );
+  return result.rows.map(rowToPaper);
+}
+
 export async function getPaper(id: string): Promise<ScientificPaper | null> {
-  return readJsonFile<ScientificPaper>(path.join(DIRS.papers, `${id}.json`));
+  const result = await query(`SELECT * FROM papers WHERE id = $1`, [id]);
+  if (result.rows.length === 0) return null;
+  return rowToPaper(result.rows[0]);
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function rowToPaper(row: any): ScientificPaper {
+  return {
+    id: row.id,
+    title: row.title,
+    abstract: row.abstract,
+    status: row.status,
+    version: row.version,
+    sections: row.sections ?? [],
+    methodology: row.methodology,
+    certaintyLevel: row.certainty_level,
+    limitations: row.limitations ?? [],
+    citations: row.citations ?? [],
+    hypothesisIds: row.hypothesis_ids ?? [],
+    category: row.category,
+    createdAt: row.created_at?.toISOString?.() ?? row.created_at,
+    updatedAt: row.updated_at?.toISOString?.() ?? row.updated_at,
+    reviewHistory: row.review_history ?? [],
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -292,12 +356,27 @@ export async function getPaper(id: string): Promise<ScientificPaper | null> {
 // ---------------------------------------------------------------------------
 
 export async function saveKnowledge(entry: KnowledgeEntry): Promise<void> {
-  const filePath = path.join(DIRS.knowledge, `${entry.id}.json`);
-  await writeJsonFile(filePath, entry);
+  await query(
+    `INSERT INTO knowledge (id, topic, content, sources, updated_at)
+     VALUES ($1, $2, $3, $4, $5)
+     ON CONFLICT (id) DO UPDATE SET
+       topic = EXCLUDED.topic,
+       content = EXCLUDED.content,
+       sources = EXCLUDED.sources,
+       updated_at = EXCLUDED.updated_at`,
+    [entry.id, entry.topic, entry.content, JSON.stringify(entry.sources), entry.lastUpdated]
+  );
 }
 
 export async function getKnowledge(): Promise<KnowledgeEntry[]> {
-  return loadAllFromDir<KnowledgeEntry>(DIRS.knowledge);
+  const result = await query(`SELECT * FROM knowledge ORDER BY updated_at DESC`);
+  return result.rows.map((row) => ({
+    id: row.id,
+    topic: row.topic,
+    content: row.content,
+    sources: row.sources ?? [],
+    lastUpdated: row.updated_at?.toISOString?.() ?? row.updated_at,
+  }));
 }
 
 // ---------------------------------------------------------------------------
@@ -305,29 +384,21 @@ export async function getKnowledge(): Promise<KnowledgeEntry[]> {
 // ---------------------------------------------------------------------------
 
 export async function getMemoryStats(): Promise<MemoryStats> {
-  const [hypotheses, sessions, papers, knowledge] = await Promise.all([
-    listJsonFiles(DIRS.hypotheses),
-    listJsonFiles(DIRS.sessions),
-    listJsonFiles(DIRS.papers),
-    listJsonFiles(DIRS.knowledge),
-  ]);
+  const result = await query(`
+    SELECT
+      (SELECT COUNT(*) FROM hypotheses)::int AS hypotheses,
+      (SELECT COUNT(*) FROM sessions)::int AS sessions,
+      (SELECT COUNT(*) FROM papers)::int AS papers,
+      (SELECT COUNT(*) FROM knowledge)::int AS knowledge_entries,
+      (SELECT created_at FROM sessions ORDER BY created_at DESC LIMIT 1) AS last_session
+  `);
 
-  // Exclude seed.json from hypothesis count
-  const hypothesisCount = hypotheses.filter((f) => f !== "seed.json").length;
-
-  let lastSession: string | null = null;
-  if (sessions.length > 0) {
-    const allSessions = await getSessions(1);
-    if (allSessions.length > 0) {
-      lastSession = allSessions[0].timestamp;
-    }
-  }
-
+  const row = result.rows[0];
   return {
-    hypotheses: hypothesisCount,
-    sessions: sessions.length,
-    papers: papers.length,
-    knowledgeEntries: knowledge.length,
-    lastSession,
+    hypotheses: row.hypotheses,
+    sessions: row.sessions,
+    papers: row.papers,
+    knowledgeEntries: row.knowledge_entries,
+    lastSession: row.last_session?.toISOString?.() ?? row.last_session ?? null,
   };
 }

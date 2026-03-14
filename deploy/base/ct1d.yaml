@@ -4,26 +4,28 @@
 # ═══════════════════════════════════════════════════════════════════════
 #
 # Architecture:
-#   ┌──────────┐
-#   │  web ×2  │  ← Next.js app (frontend + API routes)
-#   │  spread  │     Serves UI + handles AI chat + PubMed/ClinicalTrials proxy
-#   └────┬─────┘
-#        │
-#   ┌────┴─────┐
-#   │ agent ×1 │  ← Autonomous research engine
-#   │ binpack  │     Runs 30-min research cycles + 12h data refresh
-#   │ +memory  │     Persistent volume for AI memory (hypotheses, papers, sessions)
-#   └──────────┘
+#   ┌──────────────┐
+#   │   web ×2     │  ← Next.js app (frontend + API routes)
+#   │   spread     │     Serves UI + handles AI chat + PubMed/ClinicalTrials proxy
+#   │   LB:23000   │     VRE-aware load balancer
+#   └──────┬───────┘
+#          │
+#   ┌──────┴───────┐     ┌──────────────┐
+#   │  agent ×1    │────▶│   db ×1      │
+#   │  spread      │     │   spread     │
+#   │  +cron       │     │  PostgreSQL  │
+#   └──────────────┘     │  VRE volume  │
+#                        └──────────────┘
 #
 # External dependencies:
 #   - OpenAI API (GPT-4o) — for AI chat + autonomous research
 #   - PubMed E-utilities API — for live research search
 #   - ClinicalTrials.gov API v2 — for clinical trials data
 #
-# Secrets required (use ONE of the OpenAI auth methods):
-#   - openai_api_key — Standard API key from platform.openai.com (sk-...)
-#   - codex_auth_token — OAuth token from Codex CLI (~/.codex/auth.json)
+# Secrets required:
+#   - openai_api_key / codex_auth_token — OpenAI authentication
 #   - autonomous_secret — Auth token for autonomous agent cron triggers
+#   - db_password — PostgreSQL password
 #
 # Usage:
 #   carlos submit deploy/base/ct1d.yaml -a <server>
@@ -43,6 +45,71 @@ update:
   canary: 0
 
 groups:
+  # ── DATABASE TIER ─────────────────────────────────────────────────────
+  # PostgreSQL 16 with VRE-replicated data volume.
+  # All research data persists here: hypotheses, evidence, sessions, papers.
+  - name: db
+    count: 1
+    strategy: spread
+
+    restart:
+      mode: on-failure
+      max_attempts: 5
+      delay_secs: 15
+
+    volumes:
+      - name: pgdata
+        volume_type: replicated
+        source: /data/ct1d/pgdata
+        replication:
+          replicas: 3
+          sync_interval_secs: 30
+          quorum: strong
+
+    tasks:
+      - name: postgres
+        driver: docker
+        image: "postgres:16-alpine"
+        ports:
+          - label: db
+            container: 5432
+            host: 5432
+        resources:
+          cpu: 300
+          memory: 512
+        health_check:
+          type: script
+          command: ["pg_isready", "-U", "ct1d"]
+          interval_secs: 10
+          timeout_secs: 5
+          unhealthy_threshold: 3
+          healthy_threshold: 2
+          grace_period_secs: 30
+        env:
+          POSTGRES_DB: "ct1d"
+          POSTGRES_USER: "ct1d"
+          PGDATA: "/var/lib/postgresql/data/pgdata"
+          CARLOS_OWNER: "ct1d-team"
+          CARLOS_DESCRIPTION: "CT1D PostgreSQL — VRE replicated research database"
+          CARLOS_SLA_UPTIME: "0.999"
+        secrets:
+          - db_password
+        secret_env:
+          POSTGRES_PASSWORD: db_password
+        mounts:
+          - volume: pgdata
+            destination: /var/lib/postgresql/data
+        load_balancer:
+          port: 25432
+          target: db
+          vre_aware: true
+          bind_address: "0.0.0.0"
+        labels:
+          tier: data
+          tag.ct1d: "true"
+          tag.database: "true"
+          version: "16"
+
   # ── WEB TIER ─────────────────────────────────────────────────────────
   # Next.js app serving the frontend + API routes.
   # Handles: landing page, AI chat, cure landscape, research explorer,
@@ -78,14 +145,17 @@ groups:
           grace_period_secs: 30
         env:
           NODE_ENV: "production"
+          DATABASE_URL: "postgresql://ct1d:${db_password}@postgres.db.ct1d:5432/ct1d"
           CARLOS_OWNER: "ct1d-team"
           CARLOS_DESCRIPTION: "CT1D web frontend and API"
+          CARLOS_DEPENDS: "postgres.db.ct1d:required"
           CARLOS_SLA_UPTIME: "0.99"
           CARLOS_DOCS_URL: "https://github.com/trytio/ct1d"
         secrets:
           - openai_api_key
           - codex_auth_token
           - autonomous_secret
+          - db_password
         load_balancer:
           port: 23000
           target: http
@@ -101,23 +171,15 @@ groups:
   # Same container but dedicated to running the autonomous research engine.
   # Uses cron-triggered API calls to /api/autonomous/research (every 30m)
   # and /api/autonomous/refresh (every 12h).
-  # Has a persistent volume for AI memory (hypotheses, papers, sessions).
+  # Connects to PostgreSQL for persistent research data.
   - name: agent
     count: 1
-    strategy: bin_pack
+    strategy: spread
 
     restart:
       mode: on-failure
       max_attempts: 3
       delay_secs: 30
-
-    volumes:
-      - name: ai-memory
-        volume_type: replicated
-        source: /data/ct1d/memory
-        replication:
-          replicas: 2
-          sync_interval_secs: 60
 
     tasks:
       - name: researcher
@@ -141,17 +203,16 @@ groups:
           grace_period_secs: 60
         env:
           NODE_ENV: "production"
+          DATABASE_URL: "postgresql://ct1d:${db_password}@postgres.db.ct1d:5432/ct1d"
           CARLOS_OWNER: "ct1d-team"
           CARLOS_DESCRIPTION: "CT1D autonomous research agent"
-          CARLOS_DEPENDS: "nextjs.web.ct1d:optional"
+          CARLOS_DEPENDS: "postgres.db.ct1d:required"
           CARLOS_SLA_UPTIME: "0.95"
         secrets:
           - openai_api_key
           - codex_auth_token
           - autonomous_secret
-        mounts:
-          - volume: ai-memory
-            destination: /app/src/data/memory
+          - db_password
         labels:
           tier: backend
           tag.ct1d: "true"

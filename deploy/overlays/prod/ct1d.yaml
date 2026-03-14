@@ -1,7 +1,73 @@
 # CT1D — Production Overlay
-# 3 web replicas, autoscaling, full resilience, VRE-replicated memory volume
+# 3 web replicas, autoscaling, full resilience, VRE-replicated PostgreSQL
 
 groups:
+  # ── DATABASE ─────────────────────────────────────────────────────────
+  - name: db
+    count: 1
+    strategy: spread
+    resilience:
+      min_available: 1
+      cascade_check: true
+    volumes:
+      - name: pgdata
+        volume_type: replicated
+        source: /data/ct1d/pgdata
+        replication:
+          replicas: 3
+          sync_interval_secs: 30
+          quorum: strong
+    tasks:
+      - name: postgres
+        image: "postgres:16-alpine"
+        ports:
+          - label: db
+            container: 5432
+            host: 5432
+        resources:
+          cpu: 500
+          memory: 1024
+        health_check:
+          type: script
+          command: ["pg_isready", "-U", "ct1d"]
+          interval_secs: 10
+          timeout_secs: 5
+          unhealthy_threshold: 3
+          healthy_threshold: 2
+          grace_period_secs: 30
+        env:
+          POSTGRES_DB: "ct1d"
+          POSTGRES_USER: "ct1d"
+          PGDATA: "/var/lib/postgresql/data/pgdata"
+          POSTGRES_INITDB_ARGS: "--data-checksums"
+        secrets:
+          - db_password
+        secret_env:
+          POSTGRES_PASSWORD: db_password
+        mounts:
+          - volume: pgdata
+            destination: /var/lib/postgresql/data
+        load_balancer:
+          port: 25432
+          target: db
+          vre_aware: true
+          bind_address: "0.0.0.0"
+        vpa:
+          min_cpu: 200
+          max_cpu: 750
+          min_memory: 512
+          max_memory: 2048
+          target_cpu: 70
+          target_memory: 75
+          cooldown: 60
+        labels:
+          tier: data
+          tag.ct1d: "true"
+          tag.database: "true"
+          environment: "production"
+          version: "16"
+
+  # ── WEB ──────────────────────────────────────────────────────────────
   - name: web
     count: 3
     strategy: spread
@@ -36,11 +102,13 @@ groups:
           grace_period_secs: 30
         env:
           NODE_ENV: "production"
+          DATABASE_URL: "postgresql://ct1d:${db_password}@postgres.db.ct1d:5432/ct1d"
           CARLOS_SLA_UPTIME: "0.999"
         secrets:
           - openai_api_key
           - codex_auth_token
           - autonomous_secret
+          - db_password
         load_balancer:
           port: 23000
           target: http
@@ -61,19 +129,12 @@ groups:
           environment: "production"
           version: "1.0.0"
 
+  # ── AGENT ────────────────────────────────────────────────────────────
   - name: agent
     count: 1
-    strategy: bin_pack
+    strategy: spread
     resilience:
       min_available: 0
-    volumes:
-      - name: ai-memory
-        volume_type: replicated
-        source: /data/ct1d/memory
-        replication:
-          replicas: 3
-          sync_interval_secs: 30
-          quorum: strong
     tasks:
       - name: researcher
         image: "ct1d:latest"
@@ -95,14 +156,13 @@ groups:
           grace_period_secs: 60
         env:
           NODE_ENV: "production"
+          DATABASE_URL: "postgresql://ct1d:${db_password}@postgres.db.ct1d:5432/ct1d"
           CARLOS_SLA_UPTIME: "0.99"
         secrets:
           - openai_api_key
           - codex_auth_token
           - autonomous_secret
-        mounts:
-          - volume: ai-memory
-            destination: /app/src/data/memory
+          - db_password
         labels:
           tier: backend
           tag.ct1d: "true"

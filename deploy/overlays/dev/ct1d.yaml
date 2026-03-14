@@ -1,9 +1,61 @@
 # CT1D — Dev Overlay
-# Single replica, minimal resources, debug logging, no persistent volume
+# Single replica, minimal resources, debug logging, local PostgreSQL
 
 groups:
+  # ── DATABASE ─────────────────────────────────────────────────────────
+  - name: db
+    count: 1
+    strategy: spread
+    volumes:
+      - name: pgdata
+        volume_type: replicated
+        source: /data/ct1d/pgdata-dev
+        replication:
+          replicas: 1
+          sync_interval_secs: 60
+    tasks:
+      - name: postgres
+        image: "postgres:16-alpine"
+        ports:
+          - label: db
+            container: 5432
+            host: 5432
+        resources:
+          cpu: 150
+          memory: 256
+        health_check:
+          type: script
+          command: ["pg_isready", "-U", "ct1d"]
+          interval_secs: 15
+          timeout_secs: 5
+          unhealthy_threshold: 3
+          healthy_threshold: 2
+          grace_period_secs: 30
+        env:
+          POSTGRES_DB: "ct1d"
+          POSTGRES_USER: "ct1d"
+          PGDATA: "/var/lib/postgresql/data/pgdata"
+        secrets:
+          - db_password
+        secret_env:
+          POSTGRES_PASSWORD: db_password
+        mounts:
+          - volume: pgdata
+            destination: /var/lib/postgresql/data
+        load_balancer:
+          port: 25432
+          target: db
+          vre_aware: true
+          bind_address: "0.0.0.0"
+        labels:
+          tier: data
+          tag.ct1d: "true"
+          environment: "dev"
+
+  # ── WEB ──────────────────────────────────────────────────────────────
   - name: web
     count: 1
+    strategy: spread
     tasks:
       - name: nextjs
         image: "ct1d:latest"
@@ -25,21 +77,29 @@ groups:
           grace_period_secs: 30
         env:
           NODE_ENV: "development"
+          DATABASE_URL: "postgresql://ct1d:${db_password}@postgres.db.ct1d:5432/ct1d"
           DEBUG: "true"
           LOG_LEVEL: "debug"
         secrets:
           - openai_api_key
           - codex_auth_token
           - autonomous_secret
+          - db_password
+        load_balancer:
+          port: 23000
+          target: http
+          vre_aware: true
+          bind_address: "0.0.0.0"
         labels:
           tier: frontend
           tag.ct1d: "true"
           environment: "dev"
           version: "1.0.0-dev"
 
+  # ── AGENT ────────────────────────────────────────────────────────────
   - name: agent
     count: 1
-    strategy: bin_pack
+    strategy: spread
     tasks:
       - name: researcher
         image: "ct1d:latest"
@@ -61,11 +121,13 @@ groups:
           grace_period_secs: 60
         env:
           NODE_ENV: "development"
+          DATABASE_URL: "postgresql://ct1d:${db_password}@postgres.db.ct1d:5432/ct1d"
           DEBUG: "true"
         secrets:
           - openai_api_key
           - codex_auth_token
           - autonomous_secret
+          - db_password
         labels:
           tier: backend
           tag.ct1d: "true"
